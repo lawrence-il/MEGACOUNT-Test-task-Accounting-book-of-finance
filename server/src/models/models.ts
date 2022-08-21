@@ -16,31 +16,31 @@ const User: ModelDefined<UserAttr, UserCreationAttr> = sequelize.define('User', 
 });
 
 
-const ListWallets: ModelDefined<ListWalletsAttr, ListWalletsCreationAttr> = sequelize.define('listWallets', {
+const ListWallets: ModelDefined<ListWalletsAttr, ListWalletsCreationAttr> = sequelize.define('ListWallets', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 });
 
-const ListWalletsWallet: ModelDefined<ListWalletsAttr, ListWalletsCreationAttr> = sequelize.define('listWalletsWallet', {
+const ListWalletsWallet: ModelDefined<ListWalletsAttr, ListWalletsCreationAttr> = sequelize.define('ListWalletsWallet', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 });
 
 const Wallet: ModelDefined<WalletAttr, WalletCreationAttr> = sequelize.define('Wallet', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, allowNull: false},
-    currentBalance: {type: DataTypes.NUMBER, defaultValue: 0}
+    currentBalance: {type: DataTypes.INTEGER, defaultValue: 0}
 });
 
 
 const Revenue: ModelDefined<RevenueAndExpenseAttr, RevenueAndExpenseCreationAttr> = sequelize.define('Revenue', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, allowNull: false},
-    value: {type: DataTypes.NUMBER, defaultValue: 0}
+    value: {type: DataTypes.INTEGER, defaultValue: 0}
 });
 
 const Expense: ModelDefined<RevenueAndExpenseAttr, RevenueAndExpenseCreationAttr> = sequelize.define('Expense', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, allowNull: false},
-    value: {type: DataTypes.NUMBER, defaultValue: 0}
+    value: {type: DataTypes.INTEGER, defaultValue: 0}
 });
 
 // связи таблиц
@@ -62,6 +62,5 @@ Expense.belongsTo(Wallet);
 
 export {
     User, ListWallets, 
-    ListWalletsWallet, Wallet, 
-    Revenue, Expense
+    ListWalletsWallet, 
 }
