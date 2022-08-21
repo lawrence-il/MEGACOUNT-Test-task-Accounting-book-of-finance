@@ -7,7 +7,7 @@ const app = express();
 const startApp = async () => {
     try {
         await sequelize.authenticate();
-        await sequelize.sync({ force: true });
+        await sequelize.sync();
         app.listen(PORT, () => console.log(models));
     }
     catch (error) {

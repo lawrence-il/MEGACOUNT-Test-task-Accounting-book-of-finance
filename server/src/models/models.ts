@@ -8,7 +8,6 @@ import {
 } from "../types/typesModels";
 
 
-// опр таблиц
 const User: ModelDefined<UserAttr, UserCreationAttr> = sequelize.define('User', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     login: {type: DataTypes.STRING, primaryKey: true},
@@ -43,24 +42,25 @@ const Expense: ModelDefined<RevenueAndExpenseAttr, RevenueAndExpenseCreationAttr
     value: {type: DataTypes.INTEGER, defaultValue: 0}
 });
 
-// связи таблиц
+
 User.hasOne(ListWallets);
 ListWallets.belongsTo(User);
 
 ListWallets.hasMany(ListWalletsWallet);
 ListWalletsWallet.belongsTo(ListWallets);
 
-ListWalletsWallet.hasOne(Wallet);
-Wallet.belongsTo(ListWalletsWallet);
+Wallet.hasOne(ListWalletsWallet);
+ListWalletsWallet.belongsTo(Wallet);
 
-Wallet.hasMany(Revenue);
-Revenue.belongsTo(Wallet);
+Revenue.hasMany(Wallet);
+Wallet.belongsTo(Revenue);
 
-Wallet.hasMany(Expense);
-Expense.belongsTo(Wallet);
+Expense.hasMany(Wallet);
+Wallet.belongsTo(Expense);
 
 
 export {
-    User, ListWallets, 
-    ListWalletsWallet, 
+    User, ListWallets,
+    ListWalletsWallet, Wallet,
+    Revenue, Expense
 }

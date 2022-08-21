@@ -1,6 +1,5 @@
 import sequelize from "../db.js";
 import { DataTypes } from "sequelize";
-// опр таблиц
 const User = sequelize.define('User', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     login: { type: DataTypes.STRING, primaryKey: true },
@@ -27,15 +26,14 @@ const Expense = sequelize.define('Expense', {
     name: { type: DataTypes.STRING, allowNull: false },
     value: { type: DataTypes.INTEGER, defaultValue: 0 }
 });
-// связи таблиц
 User.hasOne(ListWallets);
 ListWallets.belongsTo(User);
 ListWallets.hasMany(ListWalletsWallet);
 ListWalletsWallet.belongsTo(ListWallets);
-ListWalletsWallet.hasOne(Wallet);
-Wallet.belongsTo(ListWalletsWallet);
-Wallet.hasMany(Revenue);
-Revenue.belongsTo(Wallet);
-Wallet.hasMany(Expense);
-Expense.belongsTo(Wallet);
-export { User, ListWallets, ListWalletsWallet, };
+Wallet.hasOne(ListWalletsWallet);
+ListWalletsWallet.belongsTo(Wallet);
+Revenue.hasMany(Wallet);
+Wallet.belongsTo(Revenue);
+Expense.hasMany(Wallet);
+Wallet.belongsTo(Expense);
+export { User, ListWallets, ListWalletsWallet, Wallet, Revenue, Expense };
