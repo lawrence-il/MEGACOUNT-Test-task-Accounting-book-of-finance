@@ -1,22 +1,60 @@
-import {Request, Response} from 'express';
+import {NextFunction, Request, Response} from 'express';
+import { Expense } from '../models/models.js';
+import RequestError from '../error/RequestError.js';
 
-class expenseController {
+class ExpenseController {
 
-    async addExpense(req: Request, res: Response) {
-
+    async addExpense(req: Request, res: Response, next: NextFunction) {
+        try {
+            const {name, value, WalletId} = req.body;
+            const expense = await Expense.create({name, value, WalletId});
+            return res.json(expense);
+        } catch (error) {
+            if(error instanceof RequestError) {
+                next(RequestError.badRequest(error.message));
+            }
+        }
     }
 
-    async getAllRevenues(req: Request, res: Response) {
+    async getAllExpense(req: Request, res: Response, next: NextFunction) {
+        let {WalletId, limit, sort} = req.query;
+        let expenses;
 
+        if(!sort) sort = 'DESC';
+        if(sort !== 'DESC' && sort !== 'ASC') {
+            return next(RequestError.badRequest('Неправильный  параметр sort'));
+        }
+        if(!WalletId) {
+            return next(RequestError.badRequest('Отсутствует WalletId'));
+        }
+        if(!limit) {
+            expenses = await Expense.findAndCountAll({where: {WalletId: +WalletId}, order: [['updatedAt', sort]]});
+        } else {
+            expenses = await Expense.findAndCountAll({where: {WalletId: +WalletId}, limit: +limit, order: [['updatedAt', sort]]});
+        }
+        return res.json(expenses);
     }
 
-    async updateExpense(req: Request, res: Response) {
-
+    async updateExpense(req: Request, res: Response, next: NextFunction) {
+        const {id} = req.body;
+        if(!id) {
+            return next(RequestError.badRequest('Отсутствует id'))
+        }
+        const expense = await Expense.update(req.body, {where: {id}})
+        return res.json(expense)
     }
 
-    async deleteExpense(req: Request, res: Response) {
+    async deleteExpense(req: Request, res: Response, next: NextFunction) {
+        const {id} = req.params;
+        if(!id) {
+            return next(RequestError.badRequest('Отсутствует id'))
+        }
+        const expense = await Expense.destroy({
+            where: {id}
+        });
+        return res.json(expense);
 
     }
 }
 
-export default new expenseController()
+export default new ExpenseController()

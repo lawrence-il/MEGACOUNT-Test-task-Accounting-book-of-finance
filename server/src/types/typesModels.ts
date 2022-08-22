@@ -20,6 +20,7 @@ export type RevenueAndExpenseAttr  = {
     id: number
     name: string
     value: number
+    WalletId: number
 }
 
 export type RevenueAndExpenseCreationAttr = Optional<RevenueAndExpenseAttr, 'id'>;

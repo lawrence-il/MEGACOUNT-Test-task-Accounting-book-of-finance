@@ -12,7 +12,6 @@ class UserController {
 
     async checkAuth(req: Request, res: Response, next: NextFunction) {
         const {id} = req.query;
-
         if(!id) {
             return next(RequestError.badRequest('Отсутствует id'))
         }

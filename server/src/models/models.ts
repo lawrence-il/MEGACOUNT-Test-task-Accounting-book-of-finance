@@ -52,10 +52,10 @@ ListWalletsWallet.belongsTo(ListWallets);
 Wallet.hasOne(ListWalletsWallet);
 ListWalletsWallet.belongsTo(Wallet);
 
-Wallet.hasMany(Revenue);
+Wallet.hasMany(Revenue, {as: 'revenue'});
 Revenue.belongsTo(Wallet);
 
-Wallet.hasMany(Expense);
+Wallet.hasMany(Expense, {as: 'expense'});
 Expense.belongsTo(Wallet);
 
 

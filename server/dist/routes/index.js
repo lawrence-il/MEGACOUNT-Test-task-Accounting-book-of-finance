@@ -9,5 +9,5 @@ router.use('/user', userRoutes);
 router.use('/wallet', walletRoutes);
 router.use('/listWalletsWallet', listWalletsWalletRoutes);
 router.use('/revenue', revenueRoutes);
-router.use('/expence', expenseRoutes);
+router.use('/expense', expenseRoutes);
 export default router;
