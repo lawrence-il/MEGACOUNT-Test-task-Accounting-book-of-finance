@@ -52,11 +52,11 @@ ListWalletsWallet.belongsTo(ListWallets);
 Wallet.hasOne(ListWalletsWallet);
 ListWalletsWallet.belongsTo(Wallet);
 
-Revenue.hasMany(Wallet);
-Wallet.belongsTo(Revenue);
+Wallet.hasMany(Revenue);
+Revenue.belongsTo(Wallet);
 
-Expense.hasMany(Wallet);
-Wallet.belongsTo(Expense);
+Wallet.hasMany(Expense);
+Expense.belongsTo(Wallet);
 
 
 export {

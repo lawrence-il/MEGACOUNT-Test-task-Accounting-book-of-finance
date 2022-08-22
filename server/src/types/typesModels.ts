@@ -19,7 +19,7 @@ export type WalletCreationAttr = Optional<WalletAttr, 'id'>;
 export type RevenueAndExpenseAttr  = {
     id: number
     name: string
-    currentBalance: number
+    value: number
 }
 
 export type RevenueAndExpenseCreationAttr = Optional<RevenueAndExpenseAttr, 'id'>;
