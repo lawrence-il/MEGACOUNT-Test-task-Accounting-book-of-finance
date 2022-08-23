@@ -26,7 +26,7 @@ class WalletController {
         }
         const wallet = await Wallet.findOne({ 
             where: {id},
-            include: [ // JOIN
+            include: [
                 {model: Expense, as: 'expense', separate: true, order: [['updatedAt', 'DESC']]}, 
                 {model: Revenue, as: 'revenue', separate: true, order: [['updatedAt', 'DESC']]}
             ],

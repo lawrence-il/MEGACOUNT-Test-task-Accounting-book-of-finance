@@ -42,7 +42,7 @@ class UserController {
         return res.json({ token: tokenJwt });
     }
 
-    async getNewToken(req: Request, res: Response, next: NextFunction) { // нужно для того чтобы обновлять токен для того чтобы он не устарел, если человек не выходил
+    async getNewToken(req: Request, res: Response, next: NextFunction) {
         const token = generateToken(req.user.id, req.user.role);
         return res.json({token})
     }
