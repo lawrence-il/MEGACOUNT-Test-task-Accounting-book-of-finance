@@ -28,6 +28,11 @@ export type RevenueAndExpenseCreationAttr = Optional<RevenueAndExpenseAttr, 'id'
 
 export type ListWalletsAttr = {
     id: number
+    UserId: number
 }
 
 export type ListWalletsCreationAttr = Optional<ListWalletsAttr, 'id'>;
+
+export interface RequestUser {
+    user: string
+}
