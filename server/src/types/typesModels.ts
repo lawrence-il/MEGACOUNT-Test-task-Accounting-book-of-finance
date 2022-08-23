@@ -4,9 +4,10 @@ export type UserAttr  = {
     id: number
     login: string
     password: string
+    role: string
 }
 
-export type UserCreationAttr= Optional<UserAttr, 'id'>;
+export type UserCreationAttr= Optional<UserAttr, 'id' | "role">;
 
 export type WalletAttr  = {
     id: number
