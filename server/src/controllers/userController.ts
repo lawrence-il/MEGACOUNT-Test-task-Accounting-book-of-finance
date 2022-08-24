@@ -12,9 +12,6 @@ class UserController {
 
     async registration(req: Request, res: Response, next: NextFunction) {
         const { login, password, role } = req.body;
-        if (!login || !password) {
-            return next(RequestError.badRequest('Не указан логин или пароль'));
-        }
         const check = await User.findOne({ where: { login } });
         if (check) {
             return next(RequestError.badRequest('Такой пользователь уже существует'));

@@ -16,14 +16,6 @@ class ExpenseController {
     async getAllExpense(req, res, next) {
         let { WalletId, limit, sort } = req.query;
         let expenses;
-        if (!sort)
-            sort = 'DESC';
-        if (sort !== 'DESC' && sort !== 'ASC') {
-            return next(RequestError.badRequest('Неправильный  параметр sort'));
-        }
-        if (!WalletId) {
-            return next(RequestError.badRequest('Отсутствует WalletId'));
-        }
         if (!limit) {
             expenses = await Expense.findAndCountAll({ where: { WalletId: +WalletId }, order: [['updatedAt', sort]] });
         }
@@ -34,17 +26,11 @@ class ExpenseController {
     }
     async updateExpense(req, res, next) {
         const { id } = req.body;
-        if (!id) {
-            return next(RequestError.badRequest('Отсутствует id'));
-        }
         const expense = await Expense.update(req.body, { where: { id } });
         return res.json(expense);
     }
     async deleteExpense(req, res, next) {
         const { id } = req.params;
-        if (!id) {
-            return next(RequestError.badRequest('Отсутствует id'));
-        }
         const expense = await Expense.destroy({
             where: { id }
         });

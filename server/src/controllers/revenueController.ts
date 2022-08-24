@@ -19,18 +19,11 @@ class RevenueController {
     async getAllRevenues(req: Request, res: Response, next: NextFunction) {
         let {WalletId, limit, sort} = req.query;
         let revenues;
-
-        if(!sort) sort = 'DESC';
-        if(sort !== 'DESC' && sort !== 'ASC') {
-            return next(RequestError.badRequest('Неправильный  параметр sort'));
-        }
-        if(!WalletId) { 
-            return next(RequestError.badRequest('Отсутствует WalletId'))
-        }
+        console.log(req.query)
         if(!limit) {
-            revenues = await Revenue.findAndCountAll({where: {WalletId: +WalletId}, order: [['updatedAt', sort]]});
+            revenues = await Revenue.findAndCountAll({where: {WalletId: +WalletId!}, order: [['updatedAt', sort as string]]});
         } else {
-            revenues = await Revenue.findAndCountAll({where: {WalletId: +WalletId}, limit: +limit, order: [['updatedAt', sort]]});
+            revenues = await Revenue.findAndCountAll({where: {WalletId: +WalletId!}, limit: +limit, order: [['updatedAt', sort as string]]});
         }
         return res.json(revenues);
         
@@ -38,18 +31,12 @@ class RevenueController {
 
     async updateRevenue(req: Request, res: Response, next: NextFunction) {
         const {id} = req.body;
-        if(!id) {
-            return next(RequestError.badRequest('Отсутствует id'))
-        }
         const revenue = await Revenue.update(req.body, {where: {id}})
         return res.json(revenue)
     }
 
     async deleteRevenue(req: Request, res: Response, next: NextFunction) {
         const {id} = req.params;
-        if(!id) {
-            return next(RequestError.badRequest('Отсутствует id'))
-        }
         const revenue = await Revenue.destroy({
             where: {id}
         });

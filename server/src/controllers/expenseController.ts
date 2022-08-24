@@ -19,36 +19,22 @@ class ExpenseController {
     async getAllExpense(req: Request, res: Response, next: NextFunction) {
         let {WalletId, limit, sort} = req.query;
         let expenses;
-
-        if(!sort) sort = 'DESC';
-        if(sort !== 'DESC' && sort !== 'ASC') {
-            return next(RequestError.badRequest('Неправильный  параметр sort'));
-        }
-        if(!WalletId) {
-            return next(RequestError.badRequest('Отсутствует WalletId'));
-        }
         if(!limit) {
-            expenses = await Expense.findAndCountAll({where: {WalletId: +WalletId}, order: [['updatedAt', sort]]});
+            expenses = await Expense.findAndCountAll({where: {WalletId: +WalletId!}, order: [['updatedAt', sort as string]]});
         } else {
-            expenses = await Expense.findAndCountAll({where: {WalletId: +WalletId}, limit: +limit, order: [['updatedAt', sort]]});
+            expenses = await Expense.findAndCountAll({where: {WalletId: +WalletId!}, limit: +limit, order: [['updatedAt', sort as string]]});
         }
         return res.json(expenses);
     }
 
     async updateExpense(req: Request, res: Response, next: NextFunction) {
         const {id} = req.body;
-        if(!id) {
-            return next(RequestError.badRequest('Отсутствует id'))
-        }
         const expense = await Expense.update(req.body, {where: {id}})
         return res.json(expense)
     }
 
     async deleteExpense(req: Request, res: Response, next: NextFunction) {
         const {id} = req.params;
-        if(!id) {
-            return next(RequestError.badRequest('Отсутствует id'))
-        }
         const expense = await Expense.destroy({
             where: {id}
         });
