@@ -9,7 +9,7 @@ class ExpenseController {
         }
         catch (error) {
             if (error instanceof RequestError) {
-                next(RequestError.badRequest(error.message));
+                return next(RequestError.badRequest(error.message));
             }
         }
     }

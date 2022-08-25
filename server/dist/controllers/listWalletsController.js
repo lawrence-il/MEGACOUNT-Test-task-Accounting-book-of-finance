@@ -1,10 +1,14 @@
 import { Op } from 'sequelize';
+import RequestError from '../error/RequestError.js';
 import { ListWallets, ListWalletsWallet, Wallet } from '../models/models.js';
 class ListWalletsController {
-    async getListWallet(req, res) {
+    async getListWallet(req, res, next) {
         const userId = req.user.id;
         const listWallets = await ListWallets.findOne({ where: { UserId: userId } });
-        const listWalletId = listWallets.getDataValue('id'); // сделать тип
+        if (!listWallets) {
+            return next(RequestError.internal('Не найдена запись в таблице'));
+        }
+        const listWalletId = listWallets.getDataValue('id');
         const walletIds = await ListWalletsWallet.findAndCountAll({
             attributes: ['WalletId'],
             where: { ListWalletId: listWalletId },

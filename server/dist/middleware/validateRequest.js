@@ -5,7 +5,8 @@ const validateRequest = (schema) => {
             await schema.validate({
                 body: req.body,
                 query: req.query,
-                params: req.params
+                params: req.params,
+                user: req.user
             });
             next();
         }

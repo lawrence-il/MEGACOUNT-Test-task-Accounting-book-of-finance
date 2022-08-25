@@ -9,14 +9,13 @@ class RevenueController {
         }
         catch (error) {
             if (error instanceof RequestError) {
-                next(RequestError.badRequest(error.message));
+                return next(RequestError.badRequest(error.message));
             }
         }
     }
     async getAllRevenues(req, res, next) {
         let { WalletId, limit, sort } = req.query;
         let revenues;
-        console.log(req.query);
         if (!limit) {
             revenues = await Revenue.findAndCountAll({ where: { WalletId: +WalletId }, order: [['updatedAt', sort]] });
         }
