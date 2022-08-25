@@ -1,34 +1,44 @@
-import { Expense, Revenue, Wallet } from '../models/models.js';
+import RequestError from '../error/RequestError.js';
+import { Expense, ListWallets, ListWalletsWallet, Revenue, Wallet } from '../models/models.js';
 class WalletController {
-    async createWallet(req, res) {
+    async createWallet(req, res, next) {
         const { name, currentBalance } = req.body;
+        const userId = req.user.id;
         const wallet = await Wallet.create({ name, currentBalance });
+        const listWallets = await ListWallets.findOne({ where: { UserId: userId } });
+        if (!listWallets) {
+            return next(RequestError.internal('Не найдена запись в таблице'));
+        }
+        const listWalletWallets = await ListWalletsWallet.create({
+            ListWalletId: listWallets.getDataValue('id'),
+            WalletId: wallet.getDataValue('id'),
+        });
         return res.json(wallet);
     }
     async getAllWallets(req, res) {
         const wallets = await Wallet.findAndCountAll();
         return res.json(wallets);
     }
-    async getWallet(req, res, next) {
+    async getWallet(req, res) {
         const { id } = req.params;
         const wallet = await Wallet.findOne({
             where: { id },
             include: [
                 { model: Expense, as: 'expense', separate: true, order: [['updatedAt', 'DESC']] },
-                { model: Revenue, as: 'revenue', separate: true, order: [['updatedAt', 'DESC']] }
+                { model: Revenue, as: 'revenue', separate: true, order: [['updatedAt', 'DESC']] },
             ],
         });
         return res.json(wallet);
     }
-    async updateWallet(req, res, next) {
+    async updateWallet(req, res) {
         const { id } = req.body;
         const wallet = await Wallet.update(req.body, { where: { id } });
         return res.json(wallet);
     }
-    async deleteWallet(req, res, next) {
+    async deleteWallet(req, res) {
         const { id } = req.params;
         const wallet = await Wallet.destroy({
-            where: { id }
+            where: { id },
         });
         return res.json(wallet);
     }
