@@ -4,7 +4,7 @@ import { ErrorBoundaryProps } from "../../types/types";
 
 import ErrorMessage from "../errorMessage/ErrorMessage";
 
-class ErrorBoundary extends Component<ErrorBoundaryProps> {
+class ErrorBoundary extends Component <ErrorBoundaryProps> {
 
     state = {
         error: false
