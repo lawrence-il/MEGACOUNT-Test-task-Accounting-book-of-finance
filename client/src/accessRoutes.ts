@@ -9,12 +9,16 @@ const publicRoutes: Routes[] = [
     {
        path:'/',
        Component: Auth
+    },
+    {
+        path:'/registration',
+        Component: Auth
     }
 ]
 
 const userRoutes: Routes[] = [
     {
-       path:'/list-wallet',
+       path:'/list-wallets',
        Component: ListWallets
     },
     {

@@ -5,7 +5,7 @@ class UserStore {
     user: object;
 
     constructor() {
-        this.auth = false;
+        this.auth = true;
         this.user = {};
         makeAutoObservable(this);
     }

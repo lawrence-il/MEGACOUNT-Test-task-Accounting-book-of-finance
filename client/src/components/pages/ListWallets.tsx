@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react-lite'
 import React from 'react'
 
 function ListWallets() {
@@ -6,4 +7,4 @@ function ListWallets() {
   )
 }
 
-export default ListWallets
+export default observer(ListWallets)

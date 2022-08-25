@@ -1,9 +1,11 @@
-import React from 'react'
+import { observer } from 'mobx-react-lite'
+
 
 function Expense() {
+  
   return (
     <div>Expense</div>
   )
 }
 
-export default Expense
+export default observer(Expense)

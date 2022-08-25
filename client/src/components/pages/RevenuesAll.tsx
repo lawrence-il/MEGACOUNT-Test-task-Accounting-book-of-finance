@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react-lite'
 import React from 'react'
 
 function RevenueAll() {
@@ -6,4 +7,4 @@ function RevenueAll() {
   )
 }
 
-export default RevenueAll
+export default observer(RevenueAll)
