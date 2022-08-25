@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
-import React from 'react'
+import React, { ReactElement } from 'react'
 
-function Revenue() {
+function Revenue(): ReactElement {
   return (
     <div>Revenue</div>
   )

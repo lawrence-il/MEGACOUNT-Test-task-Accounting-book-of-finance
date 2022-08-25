@@ -1,7 +1,7 @@
 import UserStore from "./UserStore";
-import WalletStore from "./WalletStore";
+import ListWalletsStore from "./ListWalletsStore";
 
 export const state = {
     user: new UserStore(),
-    wallet: new WalletStore()
+    listWallets: new ListWalletsStore()
 };

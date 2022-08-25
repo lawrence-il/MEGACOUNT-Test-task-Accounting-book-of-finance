@@ -1,7 +1,8 @@
 import { observer } from 'mobx-react-lite'
+import { ReactElement } from 'react'
 
 
-function Expense() {
+function Expense(): ReactElement {
   
   return (
     <div>Expense</div>

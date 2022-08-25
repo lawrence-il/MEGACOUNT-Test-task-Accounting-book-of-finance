@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react-lite'
-import { useContext } from 'react'
+import { ReactElement, useContext } from 'react'
 import { Context } from '../..';
 
-function ExpensesAll() {
+function ExpensesAll(): ReactElement {
 
   const {user} = useContext(Context);
   

@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
 
-export interface ErrorBoundaryProps {
+export type ErrorBoundaryProps = {
     children: ReactNode 
 }
 
@@ -9,3 +9,9 @@ export type Routes = {
     Component: FC
 }
 
+
+export type Wallet = {
+    key: number;
+    nameWallet: string;
+    currentBalance: number;
+}

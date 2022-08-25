@@ -1,5 +1,5 @@
 import { Routes } from "./types/types";
-import Auth from "./components/pages/Auth";
+import Auth from "./components/pages/auth/Auth"; 
 import ListWallets from "./components/pages/ListWallets";
 import Wallet from "./components/pages/Wallet";
 import Revenue from "./components/pages/Revenue";

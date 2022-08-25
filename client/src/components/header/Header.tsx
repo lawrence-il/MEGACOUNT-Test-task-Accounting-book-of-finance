@@ -23,7 +23,7 @@ function Header() {
 			label: 'Мои кошельки',
             key: 'item-2',
 			icon: <WalletOutlined style={{ color: 'white', fontSize: '18px' }} />,
-			onClick: () => navigate('/list-wallet')
+			onClick: () => navigate('/list-wallets')
         }, 
     ];
     return <Menu multiple={true} mode="horizontal" theme="dark" items={items} />;

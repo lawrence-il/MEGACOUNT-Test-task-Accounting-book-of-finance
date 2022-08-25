@@ -1,13 +1,14 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import { observer } from 'mobx-react-lite';
-import { useContext, useEffect, useState } from 'react';
+import { ReactElement, useContext, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Context } from '../..';
+import { Context } from '../../..';
+
 
 import './auth.sass';
 
-function Auth() {
+function Auth(): ReactElement {
     const { user } = useContext(Context);
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
