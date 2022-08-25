@@ -8,3 +8,4 @@ export type Routes = {
     path: string
     Component: FC
 }
+
