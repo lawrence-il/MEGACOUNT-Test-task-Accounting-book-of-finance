@@ -13,4 +13,10 @@ const schemaUpdateValidateId = object({
     })
 });
 
-export  {schemaDeleteValidateId, schemaUpdateValidateId}
+const schemaCheckUserId = object({
+    user: object({
+       id: number().required("Отсутствует id")
+    })
+});
+
+export  {schemaDeleteValidateId, schemaUpdateValidateId, schemaCheckUserId}

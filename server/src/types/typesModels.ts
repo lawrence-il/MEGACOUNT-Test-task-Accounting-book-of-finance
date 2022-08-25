@@ -33,6 +33,10 @@ export type ListWalletsAttr = {
 
 export type ListWalletsCreationAttr = Optional<ListWalletsAttr, 'id'>;
 
-export interface RequestUser {
-    user: string
+export type ListWalletsWalletAttr = {
+    id: number
+    ListWalletId: number
+    WalletId: number
 }
+
+export type ListWalletsWalletCreationAttr = Optional<ListWalletsWalletAttr, 'id'>

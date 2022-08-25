@@ -1,6 +1,5 @@
 import {NextFunction, Request, Response} from 'express';
 import { Expense, Revenue, Wallet } from '../models/models.js';
-import RequestError from '../error/RequestError.js';
 
 class WalletController {
 

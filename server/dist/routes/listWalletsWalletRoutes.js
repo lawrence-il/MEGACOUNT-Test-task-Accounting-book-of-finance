@@ -1,5 +1,6 @@
 import Router from "express";
-import listWalletsWalletController from "../controllers/listWalletsWalletController.js";
+import listWalletsController from "../controllers/listWalletsController.js";
+import checkRoleMiddleware from "../middleware/checkRoleMiddleware.js";
 const router = Router();
-router.get('/', listWalletsWalletController.getListWallet);
+router.get('/', checkRoleMiddleware('user'), listWalletsController.getListWallet);
 export default router;

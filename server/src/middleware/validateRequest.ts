@@ -9,7 +9,8 @@ const validateRequest = (schema: AnySchema) => {
             await schema.validate({
                 body: req.body,
                 query: req.query,
-                params: req.params
+                params: req.params,
+                user: req.user
             });
             next();
         } catch (error) {
