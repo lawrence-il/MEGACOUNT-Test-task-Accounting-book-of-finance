@@ -15,3 +15,9 @@ export type Wallet = {
     nameWallet: string;
     currentBalance: number;
 }
+
+export type ModalProps = {
+    isModalVisible: boolean
+    isAdd?: boolean
+    setIsModalVisible(isModalVisible: boolean): void
+  }
