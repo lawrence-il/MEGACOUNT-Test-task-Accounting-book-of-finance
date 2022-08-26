@@ -2,8 +2,8 @@ import { Form, Input, Modal } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { ReactElement, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Context } from '.';
-import { ModalProps, RecordType } from './types/types';
+import { Context } from '../..';
+import { ModalProps, RecordType } from '../../types/types';
 
 function ModalWindow(props: ModalProps): ReactElement {
     const { pathname } = useLocation();

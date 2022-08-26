@@ -6,7 +6,7 @@ import { RecordType } from '../../types/types';
 import { Link, useLocation } from 'react-router-dom';
 import { Context } from '../..';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import ModalWindow from '../../ModalWindow';
+import ModalWindow from '../modalWindow/ModalWindow';
 
 const { confirm } = Modal;
 
