@@ -11,17 +11,15 @@ import ModalWindow from '../modalWindow/modalWindow';
 const { confirm } = Modal;
 
 function ListWallets(): ReactElement {
-
-    const {pathname} = useLocation();
+    const { pathname } = useLocation();
 
     const {
         listWallets: { wallets, setWallets },
-        balances: {balances, setBalances},
+        revenues: { revenues, setRevenues },
     } = useContext(Context);
 
-    const varPage = pathname === '/wallets' ? wallets : pathname === '/expenses' ? balances : balances
-    const varPageId = pathname === '/wallets' ? `/wallets/` : pathname === '/expenses' ? `/expenses/` : `/expenses/` // pathname
-
+    const varPage =
+        pathname === '/wallets' ? wallets : pathname === '/expenses' ? revenues : revenues;
 
     const [isAdd, setIsAdd] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -39,19 +37,17 @@ function ListWallets(): ReactElement {
         });
     };
 
-
-    const handleDelete = (key: number, list:  RecordType[]) => {
+    const handleDelete = (key: number, list: RecordType[]) => {
         const newData = list.filter((item: RecordType) => item.key !== key);
         switch (pathname) {
             case '/wallets':
                 setWallets(newData);
                 break;
             case '/expenses':
-                setBalances(newData);
-                break;
             case '/revenues':
+                setRevenues(newData);
+                break;
         }
-        
     };
 
     const showModal = (isAdd: boolean) => {
@@ -66,7 +62,9 @@ function ListWallets(): ReactElement {
                     title="Название кошелька"
                     dataIndex="name"
                     key="name"
-                    render={(_: any, record: RecordType) => <Link to={`${varPageId}${record.key}`}>{record.name}</Link>}
+                    render={(_: any, record: RecordType) => (
+                        <Link to={`${pathname}/${record.key}`}>{record.name}</Link>
+                    )}
                 />
                 <Column title="Текущий баланс" dataIndex="value" key="value" />
                 <Column
@@ -96,11 +94,11 @@ function ListWallets(): ReactElement {
                 style={{ position: 'absolute', right: '0', margin: '20px' }}>
                 Добавить кошелёк
             </Button>
-            <ModalWindow 
-                isModalVisible={isModalVisible} 
+            <ModalWindow
+                isModalVisible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}
                 isAdd={isAdd}
-                 />
+            />
         </>
     );
 }

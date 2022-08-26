@@ -1,11 +1,11 @@
 import { makeAutoObservable } from "mobx";
 import { RecordType } from "../types/types";
 
-class BalancesStore {
-    balances: RecordType[]
+class RevenueStore {
+    revenues: RecordType[]
 
     constructor() {
-        this.balances = [
+        this.revenues = [
             {
                 key: 1,
                 name: "Расход 1",
@@ -15,13 +15,13 @@ class BalancesStore {
         makeAutoObservable(this);
     }
 
-    setBalances = (balances: RecordType[]) => {
-        this.balances = balances;
+    setRevenues= (revenues: RecordType[]) => {
+        this.revenues = revenues;
     }
 
-    get getBalances() {
-        return this.balances
+    get getRevenues() {
+        return this.revenues
     }
 }
 
-export default BalancesStore;
+export default RevenueStore;

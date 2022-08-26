@@ -5,5 +5,5 @@ import BalancesStore from "./BalancesStore";
 export const state = {
     user: new UserStore(),
     listWallets: new ListWalletsStore(),
-    balances: new BalancesStore()
+    revenues: new BalancesStore()
 };
