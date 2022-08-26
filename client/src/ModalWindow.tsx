@@ -1,22 +1,38 @@
 import { Form, Input, Modal } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { ReactElement, useContext } from 'react';
-import { Context } from '../..';
-import { ModalProps, RecordType } from '../../types/types';
+import { useLocation } from 'react-router-dom';
+import { Context } from '.';
+import { ModalProps, RecordType } from './types/types';
 
 function ModalWindow(props: ModalProps): ReactElement {
+    const { pathname } = useLocation();
 
     const {
-      listWallets: { wallets, setWallets },
-  } = useContext(Context);
+        listWallets: { wallets, setWallets },
+    } = useContext(Context);
+
+    const varTitle =
+        pathname === '/wallets'
+            ? props.isAdd
+                ? 'Добавление кошелька'
+                : 'Редактирование кошелька'
+            : pathname === '/revenues'
+            ? props.isAdd
+                ? 'Добавление дохода'
+                : 'Редактирование дохода'
+            : props.isAdd
+                ? 'Добавление дохода'
+                : 'Редактирование дохода';
+            
 
     const handle = (values: RecordType) => {
         if (props.isAdd) {
-          values.key = wallets.length === 0 ? 1 : wallets[wallets.length - 1].key + 1;
-          console.log('Received values of form(Add): ', values);
-          setWallets([...wallets, values]);
+            values.key = wallets.length === 0 ? 1 : wallets[wallets.length - 1].key + 1;
+            console.log('Received values of form(Add): ', values);
+            setWallets([...wallets, values]);
         } else {
-          console.log('Received values of form: ', values);
+            console.log('Received values of form: ', values);
         }
         props.setIsModalVisible(false);
     };
@@ -24,7 +40,7 @@ function ModalWindow(props: ModalProps): ReactElement {
     const [form] = useForm();
     return (
         <Modal
-            title={props.isAdd ? "Добавление кошелька" : "Редактирование кошелька"}
+            title={varTitle}
             visible={props.isModalVisible}
             onOk={() => {
                 form.validateFields()

@@ -6,29 +6,39 @@ import { RecordType } from '../../types/types';
 import { Link, useLocation } from 'react-router-dom';
 import { Context } from '../..';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import ModalWindow from '../modalWindow/modalWindow';
+import ModalWindow from '../../ModalWindow';
 
 const { confirm } = Modal;
 
-function ListWallets(): ReactElement {
+function Lists(): ReactElement {
     const { pathname } = useLocation();
 
     const {
         listWallets: { wallets, setWallets },
         revenues: { revenues, setRevenues },
+        expenses: { expenses, setExpenses },
     } = useContext(Context);
-
-    const varPage =
-        pathname === '/wallets' ? wallets : pathname === '/expenses' ? revenues : revenues;
 
     const [isAdd, setIsAdd] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
 
+    const varPage =
+        pathname === '/wallets' ? wallets : pathname === '/revenues' ? revenues : '/expense' ? expenses : expenses;
+
+    const varConfirm = 
+        pathname === '/wallets' ? 'кошелёк' : pathname === '/revenues' ? 'доход' : '/expense' ? 'расход' : 'расход';
+
+    const varAdd = 
+        pathname === '/wallets' ? 'кошелька' : pathname === '/revenues' ? 'доходa' : '/expense' ? 'расходa' : 'расходa';
+
+    const varValue = 
+        pathname === '/wallets' ? 'Текущий баланс' : pathname === '/revenues' ? 'Доход' : '/expense' ? 'Расход' : 'Расход';
+
     const showConfirm = (key: number) => {
         confirm({
-            title: 'Вы действительно хотите удалить кошелёк?',
+            title: `Вы действительно хотите удалить ${varConfirm}?`,
             icon: <ExclamationCircleOutlined />,
-            content: 'Кошелёк будет удалён безвозвратно',
+            content: `${varConfirm[0].toUpperCase() + varConfirm.slice(1)} будет удалён безвозвратно`,
             okText: 'Удалить',
             cancelText: 'Закрыть',
             onOk() {
@@ -43,9 +53,11 @@ function ListWallets(): ReactElement {
             case '/wallets':
                 setWallets(newData);
                 break;
-            case '/expenses':
             case '/revenues':
                 setRevenues(newData);
+                break;
+            case '/expenses':
+                setExpenses(newData);
                 break;
         }
     };
@@ -59,14 +71,14 @@ function ListWallets(): ReactElement {
         <>
             <Table dataSource={varPage} pagination={false} scroll={{ x: 320 }}>
                 <Column
-                    title="Название кошелька"
+                    title={`Название ${varAdd}`}
                     dataIndex="name"
                     key="name"
                     render={(_: any, record: RecordType) => (
                         <Link to={`${pathname}/${record.key}`}>{record.name}</Link>
                     )}
                 />
-                <Column title="Текущий баланс" dataIndex="value" key="value" />
+                <Column title={varValue} dataIndex="value" key="value" />
                 <Column
                     title="Действия"
                     key="action"
@@ -92,7 +104,7 @@ function ListWallets(): ReactElement {
                 onClick={() => showModal(true)}
                 type="primary"
                 style={{ position: 'absolute', right: '0', margin: '20px' }}>
-                Добавить кошелёк
+                {`Добавить ${varConfirm}`}
             </Button>
             <ModalWindow
                 isModalVisible={isModalVisible}
@@ -103,4 +115,4 @@ function ListWallets(): ReactElement {
     );
 }
 
-export default observer(ListWallets);
+export default observer(Lists);

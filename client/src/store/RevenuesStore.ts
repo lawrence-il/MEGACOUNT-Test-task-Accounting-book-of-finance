@@ -8,7 +8,7 @@ class RevenueStore {
         this.revenues = [
             {
                 key: 1,
-                name: "Расход 1",
+                name: "Доход 1",
                 value: 56565
             }
         ]

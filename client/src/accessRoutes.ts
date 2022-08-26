@@ -1,6 +1,6 @@
 import { Routes } from "./types/types";
 import Auth from "./components/pages/auth/Auth"; 
-import ListWallets from "./components/pages/ListWallets";
+import Lists from "./components/pages/Lists";
 import Wallet from "./components/pages/Wallet";
 import Revenue from "./components/pages/Revenue";
 import Expense from "./components/pages/ExpensesAll";
@@ -19,7 +19,7 @@ const publicRoutes: Routes[] = [
 const userRoutes: Routes[] = [
     {
        path:'/wallets',
-       Component: ListWallets
+       Component: Lists
     },
     {
         path:'/wallets/:id',
@@ -27,7 +27,7 @@ const userRoutes: Routes[] = [
     },
     {
         path:'/revenues',
-        Component: Revenue
+        Component: Lists
     },
     {
         path:'/revenues/:id',
@@ -35,7 +35,7 @@ const userRoutes: Routes[] = [
     },
     {
         path:'/expenses',
-        Component: ListWallets
+        Component: Lists
     },
     {
         path:'/expenses/:id',
