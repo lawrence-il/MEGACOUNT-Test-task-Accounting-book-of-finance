@@ -13,6 +13,7 @@ function Auth(): ReactElement {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
+    
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
@@ -26,7 +27,7 @@ function Auth(): ReactElement {
                 name="normal_login"
                 className="login-form"
                 initialValues={{ remember: true }}
-                onFinish={() => navigate('/list-wallets')}>
+                onFinish={() => navigate('/wallets')}>
                 <h1 className="form__title">{pathname === '/' ? 'Авторизация' : 'Регистрация'}</h1>
                 <Form.Item
                     name="login"

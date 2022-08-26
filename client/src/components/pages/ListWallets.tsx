@@ -2,8 +2,8 @@ import { observer } from 'mobx-react-lite';
 import { Button, Modal, Table } from 'antd';
 import { ReactElement, useContext, useState } from 'react';
 import Column from 'antd/lib/table/Column';
-import { Wallet } from '../../types/types';
-import { Link } from 'react-router-dom';
+import { RecordType } from '../../types/types';
+import { Link, useLocation } from 'react-router-dom';
 import { Context } from '../..';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import ModalWindow from '../modalWindow/modalWindow';
@@ -11,9 +11,17 @@ import ModalWindow from '../modalWindow/modalWindow';
 const { confirm } = Modal;
 
 function ListWallets(): ReactElement {
+
+    const {pathname} = useLocation();
+
     const {
         listWallets: { wallets, setWallets },
+        balances: {balances, setBalances},
     } = useContext(Context);
+
+    const varPage = pathname === '/wallets' ? wallets : pathname === '/expenses' ? balances : balances
+    const varPageId = pathname === '/wallets' ? `/wallets/` : pathname === '/expenses' ? `/expenses/` : `/expenses/` // pathname
+
 
     const [isAdd, setIsAdd] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -26,15 +34,24 @@ function ListWallets(): ReactElement {
             okText: 'Удалить',
             cancelText: 'Закрыть',
             onOk() {
-                handleDelete(key);
+                handleDelete(key, varPage);
             },
         });
     };
 
 
-    const handleDelete = (key: number) => {
-        const newData = wallets.filter((item: Wallet) => item.key !== key);
-        setWallets(newData);
+    const handleDelete = (key: number, list:  RecordType[]) => {
+        const newData = list.filter((item: RecordType) => item.key !== key);
+        switch (pathname) {
+            case '/wallets':
+                setWallets(newData);
+                break;
+            case '/expenses':
+                setBalances(newData);
+                break;
+            case '/revenues':
+        }
+        
     };
 
     const showModal = (isAdd: boolean) => {
@@ -44,18 +61,18 @@ function ListWallets(): ReactElement {
 
     return (
         <>
-            <Table dataSource={wallets} pagination={false} scroll={{ x: 320 }}>
+            <Table dataSource={varPage} pagination={false} scroll={{ x: 320 }}>
                 <Column
                     title="Название кошелька"
-                    dataIndex="nameWallet"
-                    key="nameWallet"
-                    render={(_: any, record: Wallet) => <Link to={`/wallet/${record.key}`}>{record.nameWallet}</Link>}
+                    dataIndex="name"
+                    key="name"
+                    render={(_: any, record: RecordType) => <Link to={`${varPageId}${record.key}`}>{record.name}</Link>}
                 />
-                <Column title="Текущий баланс" dataIndex="currentBalance" key="currentBalance" />
+                <Column title="Текущий баланс" dataIndex="value" key="value" />
                 <Column
                     title="Действия"
                     key="action"
-                    render={(_: any, record: Wallet) => (
+                    render={(_: any, record: RecordType) => (
                         <div
                             key={record.key}
                             style={{ color: '#1890ff', display: 'flex', flexDirection: 'column' }}>

@@ -18,27 +18,27 @@ const publicRoutes: Routes[] = [
 
 const userRoutes: Routes[] = [
     {
-       path:'/list-wallets',
+       path:'/wallets',
        Component: ListWallets
     },
     {
-        path:'/wallet/:id',
+        path:'/wallets/:id',
         Component: Wallet
     },
     {
-        path:'/revenue',
+        path:'/revenues',
         Component: Revenue
     },
     {
-        path:'/revenue/:id',
+        path:'/revenues/:id',
         Component: Revenue
     },
     {
-        path:'/expense',
-        Component: Expense
+        path:'/expenses',
+        Component: ListWallets
     },
     {
-        path:'/expense/:id',
+        path:'/expenses/:id',
         Component: Expense
     }
 ]

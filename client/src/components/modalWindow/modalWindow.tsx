@@ -2,7 +2,7 @@ import { Form, Input, Modal } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { ReactElement, useContext } from 'react';
 import { Context } from '../..';
-import { ModalProps, Wallet } from '../../types/types';
+import { ModalProps, RecordType } from '../../types/types';
 
 function ModalWindow(props: ModalProps): ReactElement {
 
@@ -10,7 +10,7 @@ function ModalWindow(props: ModalProps): ReactElement {
       listWallets: { wallets, setWallets },
   } = useContext(Context);
 
-    const handle = (values: Wallet) => {
+    const handle = (values: RecordType) => {
         if (props.isAdd) {
           values.key = wallets.length === 0 ? 1 : wallets[wallets.length - 1].key + 1;
           console.log('Received values of form(Add): ', values);
@@ -43,13 +43,13 @@ function ModalWindow(props: ModalProps): ReactElement {
                 form={form}
                 initialValues={{ modifier: 'public' }}>
                 <Form.Item
-                    name="nameWallet"
+                    name="name"
                     label="Название"
                     rules={[{ required: true, message: 'Введите название' }]}>
                     <Input />
                 </Form.Item>
                 <Form.Item
-                    name="currentBalance"
+                    name="value"
                     label="Баланс"
                     rules={[
                         { required: true, message: 'Введите баланс' },
