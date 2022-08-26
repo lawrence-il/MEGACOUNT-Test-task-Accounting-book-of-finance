@@ -31,6 +31,9 @@ function Lists(): ReactElement {
     const varAdd = 
         pathname === '/wallets' ? 'кошелька' : pathname === '/revenues' ? 'доходa' : '/expense' ? 'расходa' : 'расходa';
 
+    const varH1= 
+        pathname === '/wallets' ? 'кошельков' : pathname === '/revenues' ? 'доходов' : '/expense' ? 'расходов' : 'расходов';
+
     const varValue = 
         pathname === '/wallets' ? 'Текущий баланс' : pathname === '/revenues' ? 'Доход' : '/expense' ? 'Расход' : 'Расход';
 
@@ -69,13 +72,19 @@ function Lists(): ReactElement {
 
     return (
         <>
+            <h1 style={{textAlign: 'center'}}>Страница со списком {varH1}</h1>
             <Table dataSource={varPage} pagination={false} scroll={{ x: 320 }}>
                 <Column
                     title={`Название ${varAdd}`}
                     dataIndex="name"
                     key="name"
                     render={(_: any, record: RecordType) => (
-                        <Link to={`${pathname}/${record.key}`}>{record.name}</Link>
+                        <Link 
+                            style={{color: `${pathname === '/wallets' ? '#1890ff' : '#000'}`, cursor: `${pathname === '/wallets' ? 'pointer' : 'default'}`}} 
+                            to={pathname === '/wallets' ? `/wallets/${record.key}` : ''}
+                        >
+                            {record.name}
+                        </Link>
                     )}
                 />
                 <Column title={varValue} dataIndex="value" key="value" />

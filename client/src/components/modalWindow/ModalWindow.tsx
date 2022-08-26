@@ -21,11 +21,16 @@ function ModalWindow(props: ModalProps): ReactElement {
             ? props.isAdd
                 ? 'Добавление дохода'
                 : 'Редактирование дохода'
-            : props.isAdd
-                ? 'Добавление дохода'
-                : 'Редактирование дохода';
+            : pathname === '/expenses'
+                ? props.isAdd
+                    ? 'Добавление расхода'
+                    : 'Редактирование расхода'
+                : props.isAdd
+                ? 'Добавление расхода'
+                : 'Редактирование расхода'
+        
+    const varLabel = pathname === '/wallets' ? 'баланс' : pathname === '/revenues' ? 'доход' : '/expense' ? 'расход' : 'расход';
             
-
     const handle = (values: RecordType) => {
         if (props.isAdd) {
             values.key = wallets.length === 0 ? 1 : wallets[wallets.length - 1].key + 1;
@@ -42,6 +47,10 @@ function ModalWindow(props: ModalProps): ReactElement {
         <Modal
             title={varTitle}
             visible={props.isModalVisible}
+            okText={`${props.isAdd
+                ? 'Добавить'
+                : 'Сохранить'}`}
+            cancelText="Закрыть"
             onOk={() => {
                 form.validateFields()
                     .then((values) => {
@@ -66,10 +75,10 @@ function ModalWindow(props: ModalProps): ReactElement {
                 </Form.Item>
                 <Form.Item
                     name="value"
-                    label="Баланс"
+                    label={`${varLabel[0].toUpperCase() + varLabel.slice(1)}`}
                     rules={[
-                        { required: true, message: 'Введите баланс' },
-                        { pattern: /^[0-9]+$/, message: 'Введите число' },
+                        { required: true, message: `Введите ${varLabel}` },
+                        { pattern: /^[0-9]+$/, message: `Введите ${varLabel}` },
                     ]}>
                     <Input type="textarea" />
                 </Form.Item>
