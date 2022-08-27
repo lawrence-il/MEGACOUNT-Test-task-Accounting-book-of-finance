@@ -15,7 +15,7 @@ const ListWalletsWallet = sequelize.define('ListWalletsWallet', {
 const Wallet = sequelize.define('Wallet', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.STRING, allowNull: false },
-    currentBalance: { type: DataTypes.INTEGER, defaultValue: 0 },
+    value: { type: DataTypes.INTEGER, defaultValue: 0 },
 });
 const Revenue = sequelize.define('Revenue', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },

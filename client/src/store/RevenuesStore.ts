@@ -7,7 +7,7 @@ class RevenueStore {
     constructor() {
         this.revenues = [
             {
-                key: 1,
+                id: 1,
                 name: "Доход 1",
                 value: 56565
             }

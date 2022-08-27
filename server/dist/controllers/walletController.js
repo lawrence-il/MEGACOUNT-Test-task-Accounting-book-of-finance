@@ -2,9 +2,9 @@ import RequestError from '../error/RequestError.js';
 import { Expense, ListWallets, ListWalletsWallet, Revenue, Wallet } from '../models/models.js';
 class WalletController {
     async createWallet(req, res, next) {
-        const { name, currentBalance } = req.body;
+        const { name, value } = req.body;
         const userId = req.user.id;
-        const wallet = await Wallet.create({ name, currentBalance });
+        const wallet = await Wallet.create({ name, value });
         const listWallets = await ListWallets.findOne({ where: { UserId: userId } });
         if (!listWallets) {
             return next(RequestError.internal('Не найдена запись в таблице'));

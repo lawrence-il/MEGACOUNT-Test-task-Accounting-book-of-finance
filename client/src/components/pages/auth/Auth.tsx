@@ -4,23 +4,48 @@ import { observer } from 'mobx-react-lite';
 import { ReactElement, useContext, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Context } from '../../..';
-
+import { registrationUser, loginUser } from '../../../http/userApi';
+import { User } from '../../../types/types';
 
 import './auth.sass';
 
-const Auth = observer(function(): ReactElement {
-    const { user } = useContext(Context);
+const Auth = observer(function (): ReactElement {
+    
+    const {
+        user: { setAuth, setUser },
+    } = useContext(Context);
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
-    
+
     const navigate = useNavigate();
     const { pathname } = useLocation();
+    const isLogin = pathname === '/';
 
     useEffect(() => {
-        user.setAuth(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        setUser({} as User);
+        setAuth(false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const onClickAuth = async () => {
+        try {
+            let res: User;
+            if (isLogin) {
+                res = await loginUser(login, password);
+            } else {
+                res = await registrationUser(login, password);
+            }
+            if (res.id) {
+                setAuth(true);
+                setUser(res);
+                navigate('/wallets');
+            }
+        } catch (error: any) {
+            alert(error.response.data.message);
+
+        }
+    };
 
     return (
         <div className="form__wrapper">
@@ -28,7 +53,7 @@ const Auth = observer(function(): ReactElement {
                 name="normal_login"
                 className="login-form"
                 initialValues={{ remember: true }}
-                onFinish={() => navigate('/wallets')}>
+                onFinish={() => onClickAuth()}>
                 <h1 className="form__title">{pathname === '/' ? 'Авторизация' : 'Регистрация'}</h1>
                 <Form.Item
                     name="login"
@@ -76,9 +101,7 @@ const Auth = observer(function(): ReactElement {
                                 if (!value || getFieldValue('password') === value) {
                                     return Promise.resolve();
                                 }
-                                return Promise.reject(
-                                    new Error('Пароли не совпадают'),
-                                );
+                                return Promise.reject(new Error('Пароли не совпадают'));
                             },
                         }),
                     ]}>

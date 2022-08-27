@@ -8,7 +8,7 @@ import listWalletsWalletRoutes from "./listWalletsRoutes.js";
 const router = Router();
 
 router.use('/user', userRoutes);
-router.use('/wallet', walletRoutes);
+router.use('/wallets', walletRoutes);
 router.use('/listWallets', listWalletsWalletRoutes);
 router.use('/revenue', revenueRoutes);
 router.use('/expense', expenseRoutes);

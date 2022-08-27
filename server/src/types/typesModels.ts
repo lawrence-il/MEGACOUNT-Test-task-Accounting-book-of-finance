@@ -12,7 +12,7 @@ export type UserCreationAttr= Optional<UserAttr, 'id' | "role">;
 export type WalletAttr  = {
     id: number
     name: string
-    currentBalance: number
+    value: number
 }
 
 export type WalletCreationAttr = Optional<WalletAttr, 'id'>;

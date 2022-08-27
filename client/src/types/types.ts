@@ -13,7 +13,7 @@ export type Routes = {
 // export type Wallet = {
 //     key: number;
 //     nameWallet: string;
-//     currentBalance: number;
+//     value: number;
 // }
 
 export type ModalProps = {
@@ -23,7 +23,7 @@ export type ModalProps = {
   }
 
 export type RecordType = {
-    key: number;
+    id: number;
     name: string;
     value: number;
 } 
@@ -35,3 +35,10 @@ export type TableWalletType<T> = {
     h2: string;
     url: string;
 } 
+
+export type User = {
+    id: number
+    role: string
+    exp: number
+    iat: number
+}

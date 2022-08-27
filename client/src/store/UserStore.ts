@@ -1,12 +1,13 @@
 import { makeAutoObservable } from 'mobx';
+import { User } from '../types/types';
 
 class UserStore {
     auth: boolean;
-    user: object;
+    user: User;
 
     constructor() {
         this.auth = true;
-        this.user = {};
+        this.user = {id: 0, role: '', exp: 0, iat: 0};
         makeAutoObservable(this);
     }
 
@@ -14,7 +15,7 @@ class UserStore {
         this.auth = auth;
     };
 
-    setUser = (user: object) => {
+    setUser = (user: User) => {
         this.user = user;
     };
 

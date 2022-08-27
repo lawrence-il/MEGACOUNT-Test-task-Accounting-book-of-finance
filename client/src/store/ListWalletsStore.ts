@@ -3,35 +3,19 @@ import { RecordType } from '../types/types';
 
 class ListWalletsStore {
     wallets: RecordType[];
-    
+    isChange: boolean;
     constructor() {
-        this.wallets = [
-            {
-                key: 1,
-                name: 'Кошелёк 1',
-                value: 3200,
-            },
-            {
-                key: 2,
-                name: 'Кошелёк 2',
-                value: 4200,
-            },
-            {
-                key: 3,
-                name: 'Кошелёк 3',
-                value: 2900,
-            },
-            {
-                key: 4,
-                name: 'Кошелёк 4',
-                value: 3200,
-            },
-        ];
+        this.wallets = [];
+        this.isChange = false;
         makeAutoObservable(this);
     }
 
     setWallets = (wallets: RecordType[]) => {
         this.wallets = wallets;
+    };
+
+    setIsChange = (isChange: boolean) => {
+        this.isChange = isChange;
     };
 
     get getWallets() {

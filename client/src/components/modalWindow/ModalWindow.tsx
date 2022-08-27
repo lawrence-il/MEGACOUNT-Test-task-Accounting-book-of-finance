@@ -5,13 +5,15 @@ import { observer } from 'mobx-react-lite';
 import { ReactElement, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Context } from '../..';
+import { createWallet } from '../../http/walletApi';
 import { ModalProps, RecordType } from '../../types/types';
 
-const ModalWindow = observer(function(props: ModalProps): ReactElement {
+const ModalWindow = observer(function (props: ModalProps): ReactElement {
     const { pathname } = useLocation();
 
     const {
-        listWallets: { wallets, setWallets },
+        listWallets: { wallets, setWallets, isChange, setIsChange },
+        user: { user },
     } = useContext(Context);
 
     const varTitle =
@@ -24,22 +26,30 @@ const ModalWindow = observer(function(props: ModalProps): ReactElement {
                 ? 'Добавление дохода'
                 : 'Редактирование дохода'
             : pathname === '/expenses'
-                ? props.isAdd
-                    ? 'Добавление расхода'
-                    : 'Редактирование расхода'
-                : props.isAdd
+            ? props.isAdd
                 ? 'Добавление расхода'
-                : 'Редактирование расхода';
-        
-    const varLabel = pathname === '/wallets' ? 'баланс' : pathname === '/revenues' ? 'доход' : '/expense' ? 'расход' : 'расход';
-            
-    const handle = (values: RecordType) => {
+                : 'Редактирование расхода'
+            : props.isAdd
+            ? 'Добавление расхода'
+            : 'Редактирование расхода';
+
+    const varLabel =
+        pathname === '/wallets'
+            ? 'баланс'
+            : pathname === '/revenues'
+            ? 'доход'
+            : '/expense'
+            ? 'расход'
+            : 'расход';
+
+    const handle = async (values: RecordType) => {
         if (props.isAdd) {
-            values.key = wallets.length === 0 ? 1 : wallets[wallets.length - 1].key + 1;
-            console.log('Received values of form(Add): ', values);
-            setWallets([...wallets, values]);
+            const newWallet = await createWallet(values.name, values.value, user);
+            console.log(newWallet, '1111', values);
+            values.id = newWallet.id;
+            setIsChange(!isChange);
         } else {
-            console.log('Received values of form: ', values);
+            console.log('Received values of form: ', values); // PUT
         }
         props.setIsModalVisible(false);
     };
@@ -49,9 +59,7 @@ const ModalWindow = observer(function(props: ModalProps): ReactElement {
         <Modal
             title={varTitle}
             visible={props.isModalVisible}
-            okText={`${props.isAdd
-                ? 'Добавить'
-                : 'Сохранить'}`}
+            okText={`${props.isAdd ? 'Добавить' : 'Сохранить'}`}
             cancelText="Закрыть"
             onOk={() => {
                 form.validateFields()
@@ -80,7 +88,7 @@ const ModalWindow = observer(function(props: ModalProps): ReactElement {
                     label={`${varLabel[0].toUpperCase() + varLabel.slice(1)}`}
                     rules={[
                         { required: true, message: `Введите ${varLabel}` },
-                        { pattern: /^[0-9]+$/, message: `Введите ${varLabel}` },
+                        { pattern: /^[0-9]+$/, message: `Введите число` },
                     ]}>
                     <Input type="textarea" />
                 </Form.Item>

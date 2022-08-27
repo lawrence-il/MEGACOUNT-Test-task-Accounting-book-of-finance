@@ -4,9 +4,9 @@ import { Expense, ListWallets, ListWalletsWallet, Revenue, Wallet } from '../mod
 
 class WalletController {
     async createWallet(req: Request, res: Response, next: NextFunction) {
-        const { name, currentBalance } = req.body;
+        const { name, value } = req.body;
         const userId = req.user.id;
-        const wallet = await Wallet.create({ name, currentBalance });
+        const wallet = await Wallet.create({ name, value });
         const listWallets = await ListWallets.findOne({ where: { UserId: userId } });
         if (!listWallets) {
             return next(RequestError.internal('Не найдена запись в таблице'));

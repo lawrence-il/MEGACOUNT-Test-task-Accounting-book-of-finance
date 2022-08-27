@@ -35,7 +35,7 @@ const Wallet: ModelDefined<WalletAttr, WalletCreationAttr> =
     sequelize.define('Wallet', {
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
         name: { type: DataTypes.STRING, allowNull: false },
-        currentBalance: { type: DataTypes.INTEGER, defaultValue: 0 },
+        value: { type: DataTypes.INTEGER, defaultValue: 0 },
 });
 
 const Revenue: ModelDefined<RevenueAndExpenseAttr, RevenueAndExpenseCreationAttr> =

@@ -7,7 +7,7 @@ class ExpenseStore {
     constructor() {
         this.expenses = [
             {
-                key: 1,
+                id: 1,
                 name: "Расход 1000",
                 value: 48484
             }
