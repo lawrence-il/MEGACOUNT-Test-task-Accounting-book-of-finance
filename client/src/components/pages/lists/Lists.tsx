@@ -2,15 +2,15 @@ import { observer } from 'mobx-react-lite';
 import { Button, Modal, Table } from 'antd';
 import { ReactElement, useContext, useState } from 'react';
 import Column from 'antd/lib/table/Column';
-import { RecordType } from '../../types/types';
+import { RecordType } from '../../../types/types';
 import { Link, useLocation } from 'react-router-dom';
-import { Context } from '../..';
+import { Context } from '../../..';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import ModalWindow from '../modalWindow/ModalWindow';
+import ModalWindow from '../../modalWindow/ModalWindow';
 
 const { confirm } = Modal;
 
-function Lists(): ReactElement {
+const Lists = observer(function(): ReactElement {
     const { pathname } = useLocation();
 
     const {
@@ -31,7 +31,7 @@ function Lists(): ReactElement {
     const varAdd = 
         pathname === '/wallets' ? 'кошелька' : pathname === '/revenues' ? 'доходa' : '/expense' ? 'расходa' : 'расходa';
 
-    const varH1= 
+    const varH1 = 
         pathname === '/wallets' ? 'кошельков' : pathname === '/revenues' ? 'доходов' : '/expense' ? 'расходов' : 'расходов';
 
     const varValue = 
@@ -78,6 +78,7 @@ function Lists(): ReactElement {
                     title={`Название ${varAdd}`}
                     dataIndex="name"
                     key="name"
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     render={(_: any, record: RecordType) => (
                         <Link 
                             style={{color: `${pathname === '/wallets' ? '#1890ff' : '#000'}`, cursor: `${pathname === '/wallets' ? 'pointer' : 'default'}`}} 
@@ -91,6 +92,7 @@ function Lists(): ReactElement {
                 <Column
                     title="Действия"
                     key="action"
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     render={(_: any, record: RecordType) => (
                         <div
                             key={record.key}
@@ -122,6 +124,6 @@ function Lists(): ReactElement {
             />
         </>
     );
-}
+});
 
-export default observer(Lists);
+export default Lists;

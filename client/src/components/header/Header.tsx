@@ -7,7 +7,7 @@ import { Context } from '../..';
 
 import './header.sass';
 
-function Header() {
+const Header = observer(function() {
 
 	const navigate = useNavigate();
   	const {user: {auth}} = useContext(Context);
@@ -27,6 +27,6 @@ function Header() {
         }, 
     ];
     return <Menu multiple={true} mode="horizontal" theme="dark" items={items} />;
-}
+});
 
-export default observer(Header);
+export default Header;

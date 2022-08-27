@@ -1,3 +1,4 @@
+/* eslint-disable mobx/missing-observer */
 import { Component, ErrorInfo } from "react";
 
 import { ErrorBoundaryProps } from "../../types/types";

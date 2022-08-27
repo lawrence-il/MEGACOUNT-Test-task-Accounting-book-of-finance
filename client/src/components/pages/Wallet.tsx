@@ -1,10 +1,10 @@
-import { observer } from 'mobx-react-lite'
-import { ReactElement } from 'react'
+import { observer } from 'mobx-react-lite';
+import { ReactElement } from 'react';
 
-function Wallet(): ReactElement {
+const Wallet = observer(function(): ReactElement {
   return (
     <div>Wallet</div>
-  )
-}
+  );
+});
 
-export default observer(Wallet)
+export default Wallet;

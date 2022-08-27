@@ -2,7 +2,7 @@ import { makeAutoObservable } from "mobx";
 import { RecordType } from "../types/types";
 
 class ExpenseStore {
-    expenses: RecordType[]
+    expenses: RecordType[];
 
     constructor() {
         this.expenses = [
@@ -11,16 +11,16 @@ class ExpenseStore {
                 name: "Расход 1000",
                 value: 48484
             }
-        ]
+        ];
         makeAutoObservable(this);
     }
 
     setExpenses = (expenses: RecordType[]) => {
         this.expenses = expenses;
-    }
+    };
 
     get getExpenses() {
-        return this.expenses
+        return this.expenses;
     }
 }
 

@@ -8,23 +8,10 @@
     "rules": {
         "no-console": "warn",
         "semi": ["warn", "always"],
-        "import/order": ["warn", {
-            "groups": [
-                "builtin", 
-                "external", 
-                "internal", 
-                "parent", 
-                "sibling", 
-                "index", 
-                "object", 
-                "type"
-            ],
-            "newlines-between": "always-and-inside-groups",
-            "mobx/exhaustive-make-observable": "warn",
-            "mobx/unconditional-make-observable": "error",
-            "mobx/missing-make-observable": "error",
-            "mobx/missing-observer": "warn"
-        }]
+        "mobx/exhaustive-make-observable": "warn",
+        "mobx/unconditional-make-observable": "error",
+        "mobx/missing-make-observable": "error",
+        "mobx/missing-observer": "warn"
 
     }
 }

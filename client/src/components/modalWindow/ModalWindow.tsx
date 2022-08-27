@@ -1,11 +1,13 @@
+/* eslint-disable no-console */
 import { Form, Input, Modal } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
+import { observer } from 'mobx-react-lite';
 import { ReactElement, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Context } from '../..';
 import { ModalProps, RecordType } from '../../types/types';
 
-function ModalWindow(props: ModalProps): ReactElement {
+const ModalWindow = observer(function(props: ModalProps): ReactElement {
     const { pathname } = useLocation();
 
     const {
@@ -27,7 +29,7 @@ function ModalWindow(props: ModalProps): ReactElement {
                     : 'Редактирование расхода'
                 : props.isAdd
                 ? 'Добавление расхода'
-                : 'Редактирование расхода'
+                : 'Редактирование расхода';
         
     const varLabel = pathname === '/wallets' ? 'баланс' : pathname === '/revenues' ? 'доход' : '/expense' ? 'расход' : 'расход';
             
@@ -85,6 +87,6 @@ function ModalWindow(props: ModalProps): ReactElement {
             </Form>
         </Modal>
     );
-}
+});
 
 export default ModalWindow;

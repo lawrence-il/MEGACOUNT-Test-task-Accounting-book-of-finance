@@ -1,3 +1,4 @@
+/* eslint-disable mobx/missing-observer */
 import { FC } from 'react';
 
 import error from './error.gif';

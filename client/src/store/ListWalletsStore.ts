@@ -32,7 +32,7 @@ class ListWalletsStore {
 
     setWallets = (wallets: RecordType[]) => {
         this.wallets = wallets;
-    }
+    };
 
     get getWallets() {
         return this.wallets;

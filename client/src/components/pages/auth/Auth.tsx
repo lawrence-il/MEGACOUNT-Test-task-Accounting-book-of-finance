@@ -8,7 +8,7 @@ import { Context } from '../../..';
 
 import './auth.sass';
 
-function Auth(): ReactElement {
+const Auth = observer(function(): ReactElement {
     const { user } = useContext(Context);
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
@@ -19,6 +19,7 @@ function Auth(): ReactElement {
 
     useEffect(() => {
         user.setAuth(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
@@ -100,6 +101,6 @@ function Auth(): ReactElement {
             </Form>
         </div>
     );
-}
+});
 
-export default observer(Auth);
+export default Auth;

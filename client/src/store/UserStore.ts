@@ -12,11 +12,11 @@ class UserStore {
 
     setAuth = (auth: boolean) => {
         this.auth = auth;
-    }
+    };
 
     setUser = (user: object) => {
         this.user = user;
-    }
+    };
 
     get getAuth() {
         return this.auth;

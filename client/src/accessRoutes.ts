@@ -1,6 +1,6 @@
 import { Routes } from "./types/types";
 import Auth from "./components/pages/auth/Auth"; 
-import Lists from "./components/pages/Lists";
+import Lists from "./components/pages/lists/Lists";
 import Wallet from "./components/pages/Wallet";
 
 const publicRoutes: Routes[] = [
