@@ -7,7 +7,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Context } from '../../..';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import ModalWindow from '../../modalWindow/ModalWindow';
-
+import './lists.sass';
 const { confirm } = Modal;
 
 const Lists = observer(function(): ReactElement {
@@ -87,7 +87,7 @@ const Lists = observer(function(): ReactElement {
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     render={(_: any, record: RecordType) => (
                         <Link 
-                            style={{color: `${pathname === '/wallets' ? '#1890ff' : '#000'}`, cursor: `${pathname === '/wallets' ? 'pointer' : 'default'}`}} 
+                            className={`link ${pathname === '/wallets' ? '' : 'link_no-wallet'}`}
                             to={pathname === '/wallets' ? `/wallets/${record.key}` : ''}
                         >
                             {record.name}
@@ -100,18 +100,17 @@ const Lists = observer(function(): ReactElement {
                     key="action"
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     render={(_: any, record: RecordType) => (
-                        <div
-                            key={record.key}
-                            style={{ color: '#1890ff', display: 'flex', flexDirection: 'column' }}>
-                            <div
+                        <div className='column'
+                            key={record.key}>
+                            <div className='column__action column__action_change'
                                 onClick={() => showModal(false)}
-                                style={{ margin: '3px auto', cursor: 'pointer' }}>
-                                Редактировать
+                                >
+                                    Редактировать
                             </div>
-                            <div
+                            <div className='column__action column__action_del'
                                 onClick={() => showConfirm(record.key)}
-                                style={{ color: '#ff4d4f', margin: '3px auto', cursor: 'pointer' }}>
-                                Удалить
+                                >
+                                    Удалить
                             </div>
                         </div>
                     )}
