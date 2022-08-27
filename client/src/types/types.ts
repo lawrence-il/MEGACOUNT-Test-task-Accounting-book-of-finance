@@ -27,3 +27,11 @@ export type RecordType = {
     name: string;
     value: number;
 } 
+
+export type TableWalletType<T> = {
+    items: T[];
+    titleColumnOne: string;
+    titleColumnTwo: string;
+    h2: string;
+    url: string;
+} 

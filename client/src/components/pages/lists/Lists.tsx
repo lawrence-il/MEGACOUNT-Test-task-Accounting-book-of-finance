@@ -73,6 +73,12 @@ const Lists = observer(function(): ReactElement {
     return (
         <>
             <h1 style={{textAlign: 'center'}}>Страница со списком {varH1}</h1>
+            <Button
+                onClick={() => showModal(true)}
+                type="primary"
+                style={{ margin: '20px' }}>
+                {`Добавить ${varConfirm}`}
+            </Button>
             <Table dataSource={varPage} pagination={false} scroll={{ x: 320 }}>
                 <Column
                     title={`Название ${varAdd}`}
@@ -111,12 +117,6 @@ const Lists = observer(function(): ReactElement {
                     )}
                 />
             </Table>
-            <Button
-                onClick={() => showModal(true)}
-                type="primary"
-                style={{ position: 'absolute', right: '0', margin: '20px' }}>
-                {`Добавить ${varConfirm}`}
-            </Button>
             <ModalWindow
                 isModalVisible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}
