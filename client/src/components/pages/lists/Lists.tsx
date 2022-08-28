@@ -10,6 +10,8 @@ import ModalWindow from '../../modalWindow/ModalWindow';
 import './lists.sass';
 import { fetchListWallet } from '../../../http/listWalletsApi';
 import { deleteWallet } from '../../../http/walletApi';
+import { deleteExpense, fetchAllExpense } from '../../../http/expenseApi';
+import { deleteRevenue, fetchAllRevenue } from '../../../http/revenueApi';
 const { confirm } = Modal;
 
 const Lists = observer(function (): ReactElement {
@@ -17,19 +19,40 @@ const Lists = observer(function (): ReactElement {
 
     const {
         user: { user },
-        listWallets: { wallets, setWallets, isChange, setIsChange },
-        revenues: { revenues, setRevenues },
-        expenses: { expenses, setExpenses },
+        listWallets: { wallets, WalletId, setWallets, isChangeWallet, setIsChangeWallet },
+        revenues: { revenues, setRevenues, setIsChangeRevenue, isChangeRevenue },
+        expenses: { expenses, setExpenses, isChangeExpenses, setIsChangeExpenses },
     } = useContext(Context);
 
+    const [isIdEdited, setIsIdEdited] = useState(0);
     const [isAdd, setIsAdd] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     useEffect(() => {
         fetchListWallet(user)
             .then((wallets) => setWallets(wallets.rows))
-            .finally(() => setIsChange(false));
-    }, [isChange]);
+            .finally(() => setIsChangeWallet(false));
+    }, [isChangeWallet]);
+
+
+    useEffect(() => {
+            if(WalletId) {
+                fetchAllExpense(+WalletId)
+                    .then((expense) => setExpenses(expense.rows))
+                    .finally(() => setIsChangeExpenses(false));
+            }
+        
+    }, [isChangeExpenses]);
+
+
+    useEffect(() => {
+        if(WalletId) {
+            fetchAllRevenue(+WalletId)
+                .then((revenues) => setRevenues(revenues.rows))
+                .finally(() => setIsChangeRevenue(false));
+        }
+        
+    }, [isChangeRevenue]);
 
     const varPage =
         pathname === '/wallets'
@@ -95,26 +118,29 @@ const Lists = observer(function (): ReactElement {
         switch (pathname) {
             case '/wallets':
                 await deleteWallet(id);
-                setIsChange(!isChange);
+                setIsChangeWallet(!isChangeWallet);
                 break;
             case '/revenues':
-                // setRevenues(newData);
+                await deleteRevenue(id);
+                setIsChangeRevenue(!isChangeRevenue);
                 break;
             case '/expenses':
-                // setExpenses(newData);
+                await deleteExpense(id);
+                setIsChangeExpenses(!isChangeExpenses);
                 break;
         }
     };
 
-    const showModal = (isAdd: boolean) => {
+    const showModal = (isAdd: boolean, id: number) => {
         setIsAdd(isAdd);
         setIsModalVisible(true);
+        setIsIdEdited(id);
     };
 
     return (
         <>
             <h1 style={{ textAlign: 'center' }}>Страница со списком {varH1}</h1>
-            <Button onClick={() => showModal(true)} type="primary" style={{ margin: '20px' }}>
+            <Button onClick={() => showModal(true, 0)} type="primary" style={{ margin: '20px' }}>
                 {`Добавить ${varConfirm}`}
             </Button>
             <Table rowKey="id" dataSource={varPage} pagination={false} scroll={{ x: 320 }}>
@@ -140,14 +166,14 @@ const Lists = observer(function (): ReactElement {
                         <div className="column" key={record.id}>
                             <div
                                 className="column__action column__action_change"
-                                onClick={() => showModal(false)}>
+                                onClick={() => showModal(false, record.id)}>
                                 Редактировать
                             </div>
                             <div
                                 className="column__action column__action_del"
                                 onClick={() => showConfirm(record.id)}>
                                 Удалить
-                            </div>
+                            </div>  
                         </div>
                     )}
                 />
@@ -156,6 +182,7 @@ const Lists = observer(function (): ReactElement {
                 isModalVisible={isModalVisible}
                 setIsModalVisible={setIsModalVisible}
                 isAdd={isAdd}
+                id={isIdEdited}
             />
         </>
     );

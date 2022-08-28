@@ -65,7 +65,7 @@ const Auth = observer(function (): ReactElement {
                     hasFeedback>
                     <Input
                         prefix={<UserOutlined className="site-form-item-icon" />}
-                        placeholder="Login"
+                        placeholder="Логин"
                         onChange={(e) => setLogin(e.target.value)}
                         value={login}
                     />
@@ -84,11 +84,11 @@ const Auth = observer(function (): ReactElement {
                         type="password"
                         onChange={(e) => setPassword(e.target.value)}
                         value={password}
-                        placeholder="Password"
+                        placeholder="Пароль"
                     />
                 </Form.Item>
 
-                <Form.Item
+                {pathname === '/registration' && <Form.Item
                     name="confirm"
                     dependencies={['password']}
                     hasFeedback
@@ -110,9 +110,9 @@ const Auth = observer(function (): ReactElement {
                         type="password"
                         onChange={(e) => setConfirm(e.target.value)}
                         value={confirm}
-                        placeholder="Confirm Password"
+                        placeholder="Подтвердите пароль"
                     />
-                </Form.Item>
+                </Form.Item>}
                 <Form.Item>
                     <Button type="primary" htmlType="submit" className="login-form-button">
                         {pathname === '/' ? 'Войти' : 'Зарегистрироваться'}

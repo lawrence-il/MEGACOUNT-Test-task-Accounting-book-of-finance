@@ -18,12 +18,12 @@ class WalletController {
         return res.json(wallet);
     }
 
-    async getAllWallets(req: Request, res: Response) {
+    async getAllWallets(req: Request, res: Response) {//
         const wallets = await Wallet.findAndCountAll();
         return res.json(wallets);
     }
 
-    async getWallet(req: Request, res: Response) {
+    async getWallet(req: Request, res: Response) {//
         const { id } = req.params;
         const wallet = await Wallet.findOne({
             where: { id },

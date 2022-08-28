@@ -3,17 +3,16 @@ import { RecordType } from "../types/types";
 
 class RevenueStore {
     revenues: RecordType[];
-
+    isChangeRevenue: boolean;
     constructor() {
-        this.revenues = [
-            {
-                id: 1,
-                name: "Доход 1",
-                value: 56565
-            }
-        ];
+        this.revenues = [];
+        this.isChangeRevenue = false;
         makeAutoObservable(this);
     }
+
+    setIsChangeRevenue = (isChangeRevenue: boolean) => {
+        this.isChangeRevenue = isChangeRevenue;
+    };
 
     setRevenues= (revenues: RecordType[]) => {
         this.revenues = revenues;

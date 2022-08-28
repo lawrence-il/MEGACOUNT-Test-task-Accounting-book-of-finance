@@ -3,10 +3,12 @@ import { RecordType } from '../types/types';
 
 class ListWalletsStore {
     wallets: RecordType[];
-    isChange: boolean;
+    WalletId: number
+    isChangeWallet: boolean;
     constructor() {
         this.wallets = [];
-        this.isChange = false;
+        this.isChangeWallet = false;
+        this.WalletId = 0;
         makeAutoObservable(this);
     }
 
@@ -14,8 +16,12 @@ class ListWalletsStore {
         this.wallets = wallets;
     };
 
-    setIsChange = (isChange: boolean) => {
-        this.isChange = isChange;
+    setIsChangeWallet = (isChangeWallet: boolean) => {
+        this.isChangeWallet = isChangeWallet;
+    };
+
+    setWalletId = (WalletId: number) => {
+        this.WalletId = WalletId;
     };
 
     get getWallets() {

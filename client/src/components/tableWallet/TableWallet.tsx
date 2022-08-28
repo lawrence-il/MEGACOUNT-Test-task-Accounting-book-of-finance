@@ -9,12 +9,12 @@ const TableWallet = observer(function (props: TableWalletType<RecordType>): Reac
 
 
     const navigate = useNavigate();
-    const {items, titleColumnOne, titleColumnTwo, h2, url} = props;
+    const {items, titleColumnOne, titleColumnTwo, h2, url, id} = props;
 
     return (
         <div>
             <h2 className="wallet__title">{h2}</h2>
-			<Table dataSource={items} pagination={false} scroll={{ x: 320 }}>
+			<Table dataSource={items}  rowKey="id" pagination={false} scroll={{ x: 320 }}>
                 <Column
 					width={300}
                     title={titleColumnOne}
@@ -26,9 +26,9 @@ const TableWallet = observer(function (props: TableWalletType<RecordType>): Reac
             <Button
                 type="primary"
                 style={{ margin: '20px' }}
-                onClick={() => navigate(url)}
+                onClick={() => navigate(url, {state: {id : id}})}
                 >
-                Показать все
+                    Показать все
             </Button>
         </div>
     );

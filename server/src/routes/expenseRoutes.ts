@@ -2,7 +2,7 @@ import Router from 'express';
 import expenseController from '../controllers/expenseController.js';
 import checkRoleMiddleware from '../middleware/checkRoleMiddleware.js';
 import validateRequest from '../middleware/validateRequest.js';
-import { schemaUpdateValidateId } from '../schema/schemaValidateId.js';
+import { schemaDeleteValidateId, schemaUpdateValidateId } from '../schema/schemaValidateId.js';
 import { schemaValidateBalance, schemaValidateWalletId } from '../schema/schemeValidateBalance.js';
 
 const router = Router();
@@ -28,7 +28,7 @@ router.put(
 router.delete(
     '/:id',
     checkRoleMiddleware('user'),
-    validateRequest(schemaUpdateValidateId),
+    validateRequest(schemaDeleteValidateId),
     expenseController.deleteExpense,
 );
 

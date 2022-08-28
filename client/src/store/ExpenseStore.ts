@@ -3,17 +3,16 @@ import { RecordType } from "../types/types";
 
 class ExpenseStore {
     expenses: RecordType[];
-
+    isChangeExpenses: boolean;
     constructor() {
-        this.expenses = [
-            {
-                id: 1,
-                name: "Расход 1000",
-                value: 48484
-            }
-        ];
+        this.expenses = [];
+        this.isChangeExpenses = false;
         makeAutoObservable(this);
     }
+
+    setIsChangeExpenses = (isChangeExpenses: boolean) => {
+        this.isChangeExpenses = isChangeExpenses;
+    };
 
     setExpenses = (expenses: RecordType[]) => {
         this.expenses = expenses;

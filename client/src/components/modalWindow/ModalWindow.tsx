@@ -5,16 +5,23 @@ import { observer } from 'mobx-react-lite';
 import { ReactElement, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Context } from '../..';
-import { createWallet } from '../../http/walletApi';
-import { ModalProps, RecordType } from '../../types/types';
+import { addExpense } from '../../http/expenseApi';
+import { addRevenue } from '../../http/revenueApi';
+import { createWallet, updateWallet } from '../../http/walletApi';
+import { LocationState, ModalProps, RecordType } from '../../types/types';
 
 const ModalWindow = observer(function (props: ModalProps): ReactElement {
-    const { pathname } = useLocation();
-
+    const location = useLocation();
+    const { pathname } = location;
+    const state = location.state as LocationState;
     const {
-        listWallets: { wallets, setWallets, isChange, setIsChange },
+        listWallets: { isChangeWallet, setIsChangeWallet },
+        expenses: {isChangeExpenses, setIsChangeExpenses},
+        revenues: {isChangeRevenue, setIsChangeRevenue},
         user: { user },
     } = useContext(Context);
+
+    const [form] = useForm();
 
     const varTitle =
         pathname === '/wallets'
@@ -44,17 +51,30 @@ const ModalWindow = observer(function (props: ModalProps): ReactElement {
 
     const handle = async (values: RecordType) => {
         if (props.isAdd) {
-            const newWallet = await createWallet(values.name, values.value, user);
-            console.log(newWallet, '1111', values);
-            values.id = newWallet.id;
-            setIsChange(!isChange);
+            if (pathname === '/wallets') {
+                const newWallet = await createWallet(values.name, values.value, user);
+                console.log(newWallet, '1111', values);
+                setIsChangeWallet(!isChangeWallet);
+            }
+            if (pathname === '/expenses') {
+                const newExp = await addExpense(values.name, values.value, +state.id);
+                setIsChangeExpenses(!isChangeExpenses);
+                console.log(newExp, isChangeExpenses);
+            }
+            if (pathname === '/revenues') {
+                const newExp = await addRevenue(values.name, values.value, +state.id);
+                setIsChangeRevenue(!isChangeRevenue);
+                console.log(newExp, isChangeRevenue);
+            }
         } else {
-            console.log('Received values of form: ', values); // PUT
+            
+            const newUpdWallet = await updateWallet(values.name, values.value, props.id);
+            setIsChangeWallet(!isChangeWallet);
+            console.log('Received values of form: ', newUpdWallet); // PUT
         }
         props.setIsModalVisible(false);
     };
 
-    const [form] = useForm();
     return (
         <Modal
             title={varTitle}

@@ -16,7 +16,7 @@ class ExpenseController {
         }
     }
 
-    async getAllExpense(req: Request, res: Response, next: NextFunction) {
+    async getAllExpense(req: Request, res: Response, next: NextFunction) {//
         let {WalletId, limit, sort} = req.query;
         let expenses;
         if(!limit) {

@@ -20,6 +20,7 @@ export type ModalProps = {
     isModalVisible: boolean
     isAdd?: boolean
     setIsModalVisible(isModalVisible: boolean): void
+    id: number
   }
 
 export type RecordType = {
@@ -34,7 +35,12 @@ export type TableWalletType<T> = {
     titleColumnTwo: string;
     h2: string;
     url: string;
+    id?: string
 } 
+
+export type LocationState = {
+    id: string
+}
 
 export type User = {
     id: number
