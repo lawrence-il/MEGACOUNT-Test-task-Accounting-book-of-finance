@@ -19,7 +19,7 @@ const Lists = observer(function (): ReactElement {
 
     const {
         user: { user },
-        listWallets: { wallets, WalletId, setWallets, isChangeWallet, setIsChangeWallet },
+        listWallets: { wallets, setWallets, isChangeWallet, setIsChangeWallet },
         revenues: { revenues, setRevenues, setIsChangeRevenue, isChangeRevenue },
         expenses: { expenses, setExpenses, isChangeExpenses, setIsChangeExpenses },
     } = useContext(Context);
@@ -36,8 +36,10 @@ const Lists = observer(function (): ReactElement {
 
 
     useEffect(() => {
+        const WalletId = +localStorage.getItem("WalletId")!;
             if(WalletId) {
-                fetchAllExpense(+WalletId)
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                fetchAllExpense(WalletId)
                     .then((expense) => setExpenses(expense.rows))
                     .finally(() => setIsChangeExpenses(false));
             }
@@ -46,6 +48,7 @@ const Lists = observer(function (): ReactElement {
 
 
     useEffect(() => {
+        const WalletId = +localStorage.getItem("WalletId")!;
         if(WalletId) {
             fetchAllRevenue(+WalletId)
                 .then((revenues) => setRevenues(revenues.rows))

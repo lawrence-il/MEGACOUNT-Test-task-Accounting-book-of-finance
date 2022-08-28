@@ -14,7 +14,7 @@ class UserController {
         }
         const hashPassword = await bcrypt.hash(password, 5);
         const user = await User.create({ login, password: hashPassword, role });
-        const listWallets = await ListWallets.create({ UserId: user.getDataValue('id') });
+        await ListWallets.create({ UserId: user.getDataValue('id') });
         const tokenJwt = generateToken(user.getDataValue('id'), role);
         return res.json({ token: tokenJwt });
     }

@@ -11,14 +11,13 @@ const Wallet = observer(function (): ReactElement {
     const {id} = useParams();
 
     const {
-        listWallets: {setWalletId},
         revenues: { revenues, setRevenues},
         expenses: { expenses, setExpenses},
     } = useContext(Context);
 
     useEffect(() => {
         if(id) {
-            setWalletId(+id);
+            localStorage.setItem('WalletId', id);
             fetchWallet(+id)
                 .then(wallet => {
                     setRevenues(wallet.revenue);

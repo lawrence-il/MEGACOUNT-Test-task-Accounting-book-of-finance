@@ -8,12 +8,12 @@ import { Context } from '../..';
 import { addExpense } from '../../http/expenseApi';
 import { addRevenue } from '../../http/revenueApi';
 import { createWallet, updateWallet } from '../../http/walletApi';
-import { LocationState, ModalProps, RecordType } from '../../types/types';
+import { ModalProps, RecordType } from '../../types/types';
 
 const ModalWindow = observer(function (props: ModalProps): ReactElement {
     const location = useLocation();
     const { pathname } = location;
-    const state = location.state as LocationState;
+
     const {
         listWallets: { isChangeWallet, setIsChangeWallet },
         expenses: {isChangeExpenses, setIsChangeExpenses},
@@ -57,20 +57,21 @@ const ModalWindow = observer(function (props: ModalProps): ReactElement {
                 setIsChangeWallet(!isChangeWallet);
             }
             if (pathname === '/expenses') {
-                const newExp = await addExpense(values.name, values.value, +state.id);
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                const newExp = await addExpense(values.name, values.value, +localStorage.getItem("WalletId")!);
                 setIsChangeExpenses(!isChangeExpenses);
                 console.log(newExp, isChangeExpenses);
             }
             if (pathname === '/revenues') {
-                const newExp = await addRevenue(values.name, values.value, +state.id);
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                const newExp = await addRevenue(values.name, values.value, +localStorage.getItem("WalletId")!);
                 setIsChangeRevenue(!isChangeRevenue);
                 console.log(newExp, isChangeRevenue);
             }
         } else {
-            
             const newUpdWallet = await updateWallet(values.name, values.value, props.id);
             setIsChangeWallet(!isChangeWallet);
-            console.log('Received values of form: ', newUpdWallet); // PUT
+            console.log('Received values of form: ', newUpdWallet);
         }
         props.setIsModalVisible(false);
     };
