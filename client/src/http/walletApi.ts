@@ -7,7 +7,6 @@ const createWallet = async (name: string, value: number, user: User) => {
 };
 
 const fetchAllWallets = async () => {
-    // возможно заменю на то что есть в лист валет апи
     const { data } = await $authHost.get('api/wallets/');
     return data;
 };

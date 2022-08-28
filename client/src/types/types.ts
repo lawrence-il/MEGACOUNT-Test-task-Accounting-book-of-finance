@@ -9,13 +9,6 @@ export type Routes = {
     Component: FC
 }
 
-
-// export type Wallet = {
-//     key: number;
-//     nameWallet: string;
-//     value: number;
-// }
-
 export type ModalProps = {
     isModalVisible: boolean
     isAdd?: boolean

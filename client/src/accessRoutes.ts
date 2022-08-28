@@ -12,7 +12,7 @@ const publicRoutes: Routes[] = [
         path:'/registration',
         Component: Auth
     }
-]
+];
 
 const userRoutes: Routes[] = [
     {
@@ -27,18 +27,12 @@ const userRoutes: Routes[] = [
         path:'/revenues',
         Component: Lists
     },
-    // {
-    //     path:'/revenues/:id',
-    //     Component: Revenue
-    // },
+
     {
         path:'/expenses',
         Component: Lists
     },
-    // {
-    //     path:'/expenses/:id',
-    //     Component: Expense
-    // }
-]
 
-export {publicRoutes, userRoutes}
+];
+
+export {publicRoutes, userRoutes};

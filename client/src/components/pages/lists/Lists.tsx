@@ -7,11 +7,11 @@ import { Link, useLocation } from 'react-router-dom';
 import { Context } from '../../..';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import ModalWindow from '../../modalWindow/ModalWindow';
-import './lists.sass';
 import { fetchListWallet } from '../../../http/listWalletsApi';
 import { deleteWallet } from '../../../http/walletApi';
 import { deleteExpense, fetchAllExpense } from '../../../http/expenseApi';
 import { deleteRevenue, fetchAllRevenue } from '../../../http/revenueApi';
+import './lists.sass';
 const { confirm } = Modal;
 
 const Lists = observer(function (): ReactElement {
@@ -32,10 +32,12 @@ const Lists = observer(function (): ReactElement {
         fetchListWallet(user)
             .then((wallets) => setWallets(wallets.rows))
             .finally(() => setIsChangeWallet(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isChangeWallet]);
 
 
     useEffect(() => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const WalletId = +localStorage.getItem("WalletId")!;
             if(WalletId) {
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -44,10 +46,12 @@ const Lists = observer(function (): ReactElement {
                     .finally(() => setIsChangeExpenses(false));
             }
         
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isChangeExpenses]);
 
 
     useEffect(() => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const WalletId = +localStorage.getItem("WalletId")!;
         if(WalletId) {
             fetchAllRevenue(+WalletId)
@@ -55,6 +59,7 @@ const Lists = observer(function (): ReactElement {
                 .finally(() => setIsChangeRevenue(false));
         }
         
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isChangeRevenue]);
 
     const varPage =
