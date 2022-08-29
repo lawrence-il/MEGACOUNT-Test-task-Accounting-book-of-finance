@@ -16,7 +16,7 @@ export default (role: string) => {
             token = token.split(" ")[1];
             const decodeToken = jwt.verify(token, process.env.SECRET_KEY as string) as UserAttr;
             if(decodeToken.role !== role) {
-                return res.status(403).json({message: "Доступ запрещён"});
+                return res.status(403).json({message: "Доступ запрещён неправильная role"});
             }
             req.user = decodeToken;
             next();

@@ -7,6 +7,7 @@ import Header from '../header/Header';
 import { observer } from 'mobx-react-lite';
 import { authCheck } from '../../http/userApi';
 import { Spin } from 'antd';
+import ErrorBoundary from '../errorBoundary/ErrorBoundary';
 
 const App: FC = observer(() => {
     const {
@@ -39,7 +40,17 @@ const App: FC = observer(() => {
             <BrowserRouter>
                 <Routes>
                     {publicRoutes.map(({ path, Component }) => {
-                        return <Route key={path} path={path} element={<Component />} />;
+                        return (
+                            <Route
+                                key={path}
+                                path={path}
+                                element={
+                                    <ErrorBoundary>
+                                        <Component />
+                                    </ErrorBoundary>
+                                }
+                            />
+                        );
                     })}
                     {auth &&
                         userRoutes.map(({ path, Component }) => {
@@ -49,7 +60,10 @@ const App: FC = observer(() => {
                                     path={path}
                                     element={
                                         <>
-                                            <Header /> <Component />
+                                            <Header />
+                                            <ErrorBoundary>
+                                                <Component />
+                                            </ErrorBoundary>
                                         </>
                                     }
                                 />

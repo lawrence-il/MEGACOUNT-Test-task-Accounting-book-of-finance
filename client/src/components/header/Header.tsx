@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '../..';
+import { WALLETS_ROUTE } from '../../utils/consts';
 
 import './header.sass';
 
@@ -23,7 +24,7 @@ const Header = observer(function() {
 			label: 'Мои кошельки',
             key: 'item-2',
 			icon: <WalletOutlined style={{ color: 'white', fontSize: '18px' }} />,
-			onClick: () => navigate('/wallets')
+			onClick: () => navigate(WALLETS_ROUTE)
         }, 
     ];
     return <Menu multiple={true} mode="horizontal" theme="dark" items={items} />;

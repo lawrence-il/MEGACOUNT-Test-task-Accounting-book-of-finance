@@ -3,6 +3,7 @@ import { ReactElement, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Context } from '../../..';
 import { fetchWallet } from '../../../http/walletApi';
+import { EXPENSES_ROUTE, REVENUES_ROUTE } from '../../../utils/consts';
 import TableWallet from '../../tableWallet/TableWallet';
 import './wallet.sass';
 
@@ -26,6 +27,7 @@ const Wallet = observer(function (): ReactElement {
                 .then(wallet => setExpenses(wallet.expense));
         }
    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
@@ -36,7 +38,7 @@ const Wallet = observer(function (): ReactElement {
                 titleColumnOne='Название расхода'
                 titleColumnTwo='Расход'
                 h2='Таблица расходов'
-				url='/expenses'
+				url= {EXPENSES_ROUTE}
                 id = {id}
             />
             <TableWallet 
@@ -44,7 +46,7 @@ const Wallet = observer(function (): ReactElement {
                 titleColumnOne='Название дохода'
                 titleColumnTwo='Доход'
                 h2='Таблица доходов'
-				url='/revenues'
+				url= {REVENUES_ROUTE}
                 id = {id}
 			/>
         </>

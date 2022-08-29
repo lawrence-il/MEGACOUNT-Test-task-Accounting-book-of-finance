@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Context } from '../../..';
 import { registrationUser, loginUser } from '../../../http/userApi';
 import { User } from '../../../types/types';
+import { REG_ROUTE, WALLETS_ROUTE } from '../../../utils/consts';
 
 import './auth.sass';
 
@@ -14,6 +15,7 @@ const Auth = observer(function (): ReactElement {
     const {
         user: { setAuth, setUser },
     } = useContext(Context);
+    
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
@@ -34,12 +36,12 @@ const Auth = observer(function (): ReactElement {
             if (isLogin) {
                 res = await loginUser(login, password);
             } else {
-                res = await registrationUser(login, password);
+                res = await registrationUser(login, password, 'user');
             }
             if (res.id) {
                 setAuth(true);
                 setUser(res);
-                navigate('/wallets');
+                navigate(WALLETS_ROUTE);
             }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
@@ -89,7 +91,7 @@ const Auth = observer(function (): ReactElement {
                     />
                 </Form.Item>
 
-                {pathname === '/registration' && <Form.Item
+                {pathname === REG_ROUTE && <Form.Item
                     name="confirm"
                     dependencies={['password']}
                     hasFeedback
@@ -118,7 +120,7 @@ const Auth = observer(function (): ReactElement {
                     <Button type="primary" htmlType="submit" className="login-form-button">
                         {pathname === '/' ? 'Войти' : 'Зарегистрироваться'}
                     </Button>
-                    <Link to={pathname === '/' ? '/registration' : '/'}>
+                    <Link to={pathname === '/' ? REG_ROUTE : '/'}>
                         {pathname === '/' ? 'Страница регистрации' : 'Страница авторизации'}
                     </Link>
                 </Form.Item>

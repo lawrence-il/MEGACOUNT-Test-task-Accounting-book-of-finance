@@ -12,16 +12,20 @@ import { deleteWallet } from '../../../http/walletApi';
 import { deleteExpense, fetchAllExpense } from '../../../http/expenseApi';
 import { deleteRevenue, fetchAllRevenue } from '../../../http/revenueApi';
 import './lists.sass';
+import useConsts from '../../../hook/useConsts';
+import { EXPENSES_ROUTE, REVENUES_ROUTE, WALLETS_ROUTE } from '../../../utils/consts';
 const { confirm } = Modal;
 
 const Lists = observer(function (): ReactElement {
     const { pathname } = useLocation();
 
+    const {varAdd, varConfirm, varH1, varPage, varValue} = useConsts();
+
     const {
         user: { user },
-        listWallets: { wallets, setWallets, isChangeWallet, setIsChangeWallet },
-        revenues: { revenues, setRevenues, setIsChangeRevenue, isChangeRevenue },
-        expenses: { expenses, setExpenses, isChangeExpenses, setIsChangeExpenses },
+        listWallets: { setWallets, isChangeWallet, setIsChangeWallet },
+        revenues: { setRevenues, setIsChangeRevenue, isChangeRevenue },
+        expenses: { setExpenses, isChangeExpenses, setIsChangeExpenses },
     } = useContext(Context);
 
     const [isIdEdited, setIsIdEdited] = useState(0);
@@ -62,50 +66,6 @@ const Lists = observer(function (): ReactElement {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isChangeRevenue]);
 
-    const varPage =
-        pathname === '/wallets'
-            ? wallets
-            : pathname === '/revenues'
-            ? revenues
-            : '/expense'
-            ? expenses
-            : expenses;
-
-    const varConfirm =
-        pathname === '/wallets'
-            ? 'кошелёк'
-            : pathname === '/revenues'
-            ? 'доход'
-            : '/expense'
-            ? 'расход'
-            : 'расход';
-
-    const varAdd =
-        pathname === '/wallets'
-            ? 'кошелька'
-            : pathname === '/revenues'
-            ? 'доходa'
-            : '/expense'
-            ? 'расходa'
-            : 'расходa';
-
-    const varH1 =
-        pathname === '/wallets'
-            ? 'кошельков'
-            : pathname === '/revenues'
-            ? 'доходов'
-            : '/expense'
-            ? 'расходов'
-            : 'расходов';
-
-    const varValue =
-        pathname === '/wallets'
-            ? 'Текущий баланс'
-            : pathname === '/revenues'
-            ? 'Доход'
-            : '/expense'
-            ? 'Расход'
-            : 'Расход';
 
     const showConfirm = (id: number) => {
         confirm({
@@ -124,15 +84,15 @@ const Lists = observer(function (): ReactElement {
 
     const handleDelete = async (id: number) => {
         switch (pathname) {
-            case '/wallets':
+            case WALLETS_ROUTE:
                 await deleteWallet(id);
                 setIsChangeWallet(!isChangeWallet);
                 break;
-            case '/revenues':
+            case REVENUES_ROUTE:
                 await deleteRevenue(id);
                 setIsChangeRevenue(!isChangeRevenue);
                 break;
-            case '/expenses':
+            case EXPENSES_ROUTE:
                 await deleteExpense(id);
                 setIsChangeExpenses(!isChangeExpenses);
                 break;
@@ -159,8 +119,8 @@ const Lists = observer(function (): ReactElement {
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     render={(_: any, record: RecordType) => (
                         <Link
-                            className={`link ${pathname === '/wallets' ? '' : 'link_no-wallet'}`}
-                            to={pathname === '/wallets' ? `/wallets/${record.id}` : ''}>
+                            className={`link ${pathname === WALLETS_ROUTE ? '' : 'link_no-wallet'}`}
+                            to={pathname === WALLETS_ROUTE ? `${WALLETS_ROUTE}/${record.id}` : ''}>
                             {record.name}
                         </Link>
                     )}

@@ -5,10 +5,12 @@ import { observer } from 'mobx-react-lite';
 import { ReactElement, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Context } from '../..';
+import useConsts from '../../hook/useConsts';
 import { addExpense } from '../../http/expenseApi';
 import { addRevenue } from '../../http/revenueApi';
 import { createWallet, updateWallet } from '../../http/walletApi';
 import { ModalProps, RecordType } from '../../types/types';
+import { EXPENSES_ROUTE, REVENUES_ROUTE, WALLETS_ROUTE } from '../../utils/consts';
 
 const ModalWindow = observer(function (props: ModalProps): ReactElement {
     const location = useLocation();
@@ -23,46 +25,22 @@ const ModalWindow = observer(function (props: ModalProps): ReactElement {
 
     const [form] = useForm();
 
-    const varTitle =
-        pathname === '/wallets'
-            ? props.isAdd
-                ? 'Добавление кошелька'
-                : 'Редактирование кошелька'
-            : pathname === '/revenues'
-            ? props.isAdd
-                ? 'Добавление дохода'
-                : 'Редактирование дохода'
-            : pathname === '/expenses'
-            ? props.isAdd
-                ? 'Добавление расхода'
-                : 'Редактирование расхода'
-            : props.isAdd
-            ? 'Добавление расхода'
-            : 'Редактирование расхода';
-
-    const varLabel =
-        pathname === '/wallets'
-            ? 'баланс'
-            : pathname === '/revenues'
-            ? 'доход'
-            : '/expense'
-            ? 'расход'
-            : 'расход';
+    const {varLabel} = useConsts();
 
     const handle = async (values: RecordType) => {
         if (props.isAdd) {
-            if (pathname === '/wallets') {
+            if (pathname === WALLETS_ROUTE) {
                 const newWallet = await createWallet(values.name, values.value, user);
                 console.log(newWallet, '1111', values);
                 setIsChangeWallet(!isChangeWallet);
             }
-            if (pathname === '/expenses') {
+            if (pathname === EXPENSES_ROUTE) {
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 const newExp = await addExpense(values.name, values.value, +localStorage.getItem("WalletId")!);
                 setIsChangeExpenses(!isChangeExpenses);
                 console.log(newExp, isChangeExpenses);
             }
-            if (pathname === '/revenues') {
+            if (pathname === REVENUES_ROUTE) {
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 const newExp = await addRevenue(values.name, values.value, +localStorage.getItem("WalletId")!);
                 setIsChangeRevenue(!isChangeRevenue);
@@ -75,6 +53,24 @@ const ModalWindow = observer(function (props: ModalProps): ReactElement {
         }
         props.setIsModalVisible(false);
     };
+
+    const varTitle =
+    pathname === WALLETS_ROUTE
+        ? props.isAdd
+            ? 'Добавление кошелька'
+            : 'Редактирование кошелька'
+        : pathname === REVENUES_ROUTE
+        ? props.isAdd
+            ? 'Добавление дохода'
+            : 'Редактирование дохода'
+        : pathname === EXPENSES_ROUTE
+        ? props.isAdd
+            ? 'Добавление расхода'
+            : 'Редактирование расхода'
+        : props.isAdd
+        ? 'Добавление расхода'
+        : 'Редактирование расхода';
+
 
     return (
         <Modal
