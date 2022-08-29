@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { observer } from 'mobx-react-lite';
 import { Button, Modal, Table } from 'antd';
 import { ReactElement, useContext, useEffect, useState } from 'react';
@@ -32,38 +34,40 @@ const Lists = observer(function (): ReactElement {
     const [isAdd, setIsAdd] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
 
-    useEffect(() => {
+    const getListWallet = () => {
         fetchListWallet(user)
             .then((wallets) => setWallets(wallets.rows))
             .finally(() => setIsChangeWallet(false));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    };
+
+
+    useEffect(() => {
+        getListWallet();
     }, [isChangeWallet]);
 
 
     useEffect(() => {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
         const WalletId = +localStorage.getItem("WalletId")!;
-            if(WalletId) {
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                fetchAllExpense(WalletId)
-                    .then((expense) => setExpenses(expense.rows))
-                    .finally(() => setIsChangeExpenses(false));
-            }
+        getListWallet();
+        if(WalletId) {
+            fetchAllExpense(WalletId)
+                .then((expense) => setExpenses(expense.rows))
+                .finally(() => setIsChangeExpenses(false));
+        }
         
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isChangeExpenses]);
 
 
     useEffect(() => {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const WalletId = +localStorage.getItem("WalletId")!;
+        getListWallet();
         if(WalletId) {
             fetchAllRevenue(+WalletId)
                 .then((revenues) => setRevenues(revenues.rows))
                 .finally(() => setIsChangeRevenue(false));
         }
         
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isChangeRevenue]);
 
 

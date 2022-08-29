@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Form, Input, Modal } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { observer } from 'mobx-react-lite';
@@ -6,8 +6,8 @@ import { ReactElement, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Context } from '../..';
 import useConsts from '../../hook/useConsts';
-import { addExpense } from '../../http/expenseApi';
-import { addRevenue } from '../../http/revenueApi';
+import { addExpense, updateExpense } from '../../http/expenseApi';
+import { addRevenue, updateRevenue } from '../../http/revenueApi';
 import { createWallet, updateWallet } from '../../http/walletApi';
 import { ModalProps, RecordType } from '../../types/types';
 import { EXPENSES_ROUTE, REVENUES_ROUTE, WALLETS_ROUTE } from '../../utils/consts';
@@ -30,26 +30,30 @@ const ModalWindow = observer(function (props: ModalProps): ReactElement {
     const handle = async (values: RecordType) => {
         if (props.isAdd) {
             if (pathname === WALLETS_ROUTE) {
-                const newWallet = await createWallet(values.name, values.value, user);
-                console.log(newWallet, '1111', values);
+                await createWallet(values.name, values.value, user);
                 setIsChangeWallet(!isChangeWallet);
             }
             if (pathname === EXPENSES_ROUTE) {
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                const newExp = await addExpense(values.name, values.value, +localStorage.getItem("WalletId")!);
+                await addExpense(values.name, values.value, +localStorage.getItem("WalletId")!);
                 setIsChangeExpenses(!isChangeExpenses);
-                console.log(newExp, isChangeExpenses);
             }
             if (pathname === REVENUES_ROUTE) {
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                const newExp = await addRevenue(values.name, values.value, +localStorage.getItem("WalletId")!);
+                await addRevenue(values.name, values.value, +localStorage.getItem("WalletId")!);
                 setIsChangeRevenue(!isChangeRevenue);
-                console.log(newExp, isChangeRevenue);
             }
         } else {
-            const newUpdWallet = await updateWallet(values.name, values.value, props.id);
-            setIsChangeWallet(!isChangeWallet);
-            console.log('Received values of form: ', newUpdWallet);
+            if (pathname === WALLETS_ROUTE) {
+                await updateWallet(values.name, values.value, props.id);
+                setIsChangeWallet(!isChangeWallet);
+            }
+            if (pathname === EXPENSES_ROUTE) {
+                await updateExpense(values.name, values.value, props.id);
+                setIsChangeExpenses(!isChangeExpenses);
+            }
+            if (pathname === REVENUES_ROUTE) {
+                await updateRevenue(values.name, values.value, props.id);
+                setIsChangeRevenue(!isChangeRevenue);
+            }
         }
         props.setIsModalVisible(false);
     };
@@ -97,7 +101,8 @@ const ModalWindow = observer(function (props: ModalProps): ReactElement {
                 <Form.Item
                     name="name"
                     label="Название"
-                    rules={[{ required: true, message: 'Введите название' }]}>
+                    rules={[{ required: true, message: 'Введите название' },
+                            { min: 3, message: 'Название должно быть больше 2 символов'},]}>
                     <Input />
                 </Form.Item>
                 <Form.Item
@@ -106,7 +111,7 @@ const ModalWindow = observer(function (props: ModalProps): ReactElement {
                     rules={[
                         { required: true, message: `Введите ${varLabel}` },
                         { pattern: /^[0-9]+$/, message: `Введите число` },
-                    ]}>
+                        { pattern: /[^0]/, message: 'Значение должно быть больше нуля'}]}>
                     <Input type="textarea" />
                 </Form.Item>
             </Form>
