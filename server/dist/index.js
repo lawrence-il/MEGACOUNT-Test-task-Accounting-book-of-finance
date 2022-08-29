@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import express from "express";
 import sequelize from './db.js';
+// import * as models from "./models/models.js";
 import cors from "cors";
 import router from './routes/index.js';
 import errorHandler from './middleware/ErrorHandlingMiddleware.js';
