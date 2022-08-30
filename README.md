@@ -12,6 +12,8 @@ MEGACOUNT Тестовое задание на вакансию программ
 `npm i`
 ##### При ошибки npm i
 `npm i --legacy-peer-deps`
+#### Для создания БД
+`npx sequelize-cli db:create`
 #### Запустить приложение
 `npm start`
 
@@ -27,8 +29,3 @@ MEGACOUNT Тестовое задание на вакансию программ
 `npm i --legacy-peer-deps`
 #### Запустить приложение
 `npm start`
-
-### Авторизация
----
-Логин: Ilya8888
-Пароль: Ilya8888
