@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "npx tsc",
-    "start": "concurrently \"npx tsc --watch\" \"nodemon dist/index.js\"",
+    "start": "concurrently \"npx tsc --watch\" \"npx sequelize-cli db:migrate\" \"nodemon dist/index.js\"",
     "mig": "npx sequelize-cli db:migrate",
     "startJs": "nodemon dist/index.js"
   },
