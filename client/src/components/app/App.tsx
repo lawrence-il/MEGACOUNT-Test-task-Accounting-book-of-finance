@@ -1,5 +1,5 @@
 import { FC, useContext, useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { Context } from '../../index';
 
 import { publicRoutes, userRoutes } from '../../accessRoutes';
@@ -8,20 +8,25 @@ import { observer } from 'mobx-react-lite';
 import { authCheck } from '../../http/userApi';
 import { Spin } from 'antd';
 import ErrorBoundary from '../errorBoundary/ErrorBoundary';
+import { REG_ROUTE } from '../../utils/consts';
 
 const App: FC = observer(() => {
+    const {pathname} = useLocation();
     const {
         user: { auth, setAuth, setUser },
     } = useContext(Context);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        authCheck()
+        if(pathname !== '/' && pathname !== REG_ROUTE) {
+            authCheck()
             .then((data) => {
                 setUser(data);
                 setAuth(true);
             })
             .finally(() => setLoading(false));
+        }
+        setLoading(false);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
