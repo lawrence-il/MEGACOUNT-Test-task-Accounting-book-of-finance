@@ -25,7 +25,7 @@ class WalletController {
 
     async getWallet(req: Request, res: Response) {//
         const { id } = req.params;
-        await ListWalletsWallet.destroy({where: {WalletId: id}})
+
         const wallet = await Wallet.findOne({
             where: { id },
             include: [
