@@ -32,6 +32,6 @@ MEGACOUNT Тестовое задание на вакансию программ
 
 #### В запустившемся приложении зарегистрируйтесь
 ## Ссылка на рабочее приложение
-`https://client-zeta-sooty.vercel.app/wallets`
-Логин:Ilya8888
-Пароль:Ilya8888
+https://client-zeta-sooty.vercel.app/wallets
+# Логин:Ilya8888
+# Пароль:Ilya8888
