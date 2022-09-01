@@ -37,6 +37,8 @@ class WalletController {
     }
     async deleteWallet(req, res) {
         const { id } = req.params;
+        await Revenue.destroy({where: {WalletId: id}});
+        await Expense.destroy({where: {WalletId: id}});
         await ListWalletsWallet.destroy({where: {WalletId: id}});
         const wallet = await Wallet.destroy({
             where: { id },
