@@ -42,40 +42,38 @@ const App: FC = observer(() => {
 
     return (
         <>
-            <BrowserRouter>
-                <Routes>
-                    {publicRoutes.map(({ path, Component }) => {
+            <Routes>
+                {publicRoutes.map(({ path, Component }) => {
+                    return (
+                        <Route
+                            key={path}
+                            path={path}
+                            element={
+                                <ErrorBoundary>
+                                    <Component />
+                                </ErrorBoundary>
+                            }
+                        />
+                    );
+                })}
+                {auth &&
+                    userRoutes.map(({ path, Component }) => {
                         return (
                             <Route
                                 key={path}
                                 path={path}
                                 element={
-                                    <ErrorBoundary>
-                                        <Component />
-                                    </ErrorBoundary>
+                                    <>
+                                        <Header />
+                                        <ErrorBoundary>
+                                            <Component />
+                                        </ErrorBoundary>
+                                    </>
                                 }
                             />
                         );
                     })}
-                    {auth &&
-                        userRoutes.map(({ path, Component }) => {
-                            return (
-                                <Route
-                                    key={path}
-                                    path={path}
-                                    element={
-                                        <>
-                                            <Header />
-                                            <ErrorBoundary>
-                                                <Component />
-                                            </ErrorBoundary>
-                                        </>
-                                    }
-                                />
-                            );
-                        })}
-                </Routes>
-            </BrowserRouter>
+            </Routes>
         </>
     );
 });
