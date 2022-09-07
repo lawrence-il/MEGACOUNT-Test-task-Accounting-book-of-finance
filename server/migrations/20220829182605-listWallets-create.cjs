@@ -9,6 +9,7 @@ module.exports = {
             id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
             UserId: {
                 type: Sequelize.INTEGER,
+                onDelete: 'CASCADE',
                 references: {
                     model: modelUser,
                     key: 'id',
