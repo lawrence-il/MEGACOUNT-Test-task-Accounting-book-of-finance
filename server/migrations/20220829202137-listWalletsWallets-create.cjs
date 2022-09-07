@@ -10,6 +10,7 @@ module.exports = {
             id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
             ListWalletId: {
               type: Sequelize.INTEGER,
+              onDelete: 'CASCADE',
               references: {
                 model: modelListWallets,
                 key: 'id',
@@ -17,6 +18,7 @@ module.exports = {
             },
             WalletId: {
               type: Sequelize.INTEGER,
+              onDelete: 'CASCADE',
               references: {
                 model: modelWallets,
                 key: 'id',
