@@ -18,12 +18,12 @@ class WalletController {
         return res.json(wallet);
     }
 
-    async getAllWallets(req: Request, res: Response) {//
+    async getAllWallets(req: Request, res: Response) {
         const wallets = await Wallet.findAndCountAll();
         return res.json(wallets);
     }
 
-    async getWallet(req: Request, res: Response) {//
+    async getWallet(req: Request, res: Response) {
         const { id } = req.params;
 
         const wallet = await Wallet.findOne({
@@ -45,9 +45,6 @@ class WalletController {
 
     async deleteWallet(req: Request, res: Response) {
         const { id } = req.params;
-        await Revenue.destroy({where: {WalletId: id}});
-        await Expense.destroy({where: {WalletId: id}});
-        await ListWalletsWallet.destroy({where: {WalletId: id}});
         const wallet = await Wallet.destroy({
             where: { id },
         });
