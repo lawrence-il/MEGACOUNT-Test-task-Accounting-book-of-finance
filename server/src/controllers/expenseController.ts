@@ -59,7 +59,7 @@ class ExpenseController {
         await Wallet.update({
             id: wallet.getDataValue("id"),
             name: wallet.getDataValue("name"),
-            value: wallet.getDataValue("value") + oldValueExp.getDataValue("value") - +req.body.value //  value: wallet.getDataValue("value") - oldValueExp.getDataValue("value") + +req.body.value
+            value: wallet.getDataValue("value") + oldValueExp.getDataValue("value") - +req.body.value
         }, {
             where: { id: oldValueExp.getDataValue("WalletId") },
         });
