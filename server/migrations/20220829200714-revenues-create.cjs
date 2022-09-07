@@ -11,6 +11,7 @@ module.exports = {
             value: { type: Sequelize.INTEGER },
             WalletId : {
               type: Sequelize.INTEGER,
+              onDelete: 'CASCADE',
               references: {
                 model: modelWallets,
                 key: 'id',
